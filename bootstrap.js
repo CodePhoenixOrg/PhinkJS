@@ -4,8 +4,6 @@ let fs = require('fs');
 
 let folders = __dirname.split(path.sep);
 
-//folders.pop();
-
 global.PHINK_ROOT = folders.join(path.sep) + path.sep;
 
 folders.pop();
@@ -34,17 +32,7 @@ BootStrap.init = function () {
 
     }
 
-    //".." + path.sep + 
     let outfile = global.SITE_ROOT + "vendor" + path.sep + "phink" + path.sep + "phink.js";
-    // let dir = __dirname + path.sep + "server" + path.sep;
-    // let tree = [ 
-    //     "core.js", 
-    //     "core" + path.sep + "object.js", 
-    //     "rest" + path.sep + "rest_router.js", 
-    //     "utils" + path.sep + "io.js", 
-    //     "web" + path.sep + "web_object.js", 
-    //     "web" + path.sep + "web_application.js", 
-    // ];
 
     let dir = global.PHINK_ROOT + "client" + path.sep;
     let tree = [
