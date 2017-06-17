@@ -1,11 +1,11 @@
-﻿var NestJS = NestJS || {}
-NestJS.Utils = NestJS.Utils || {}
-NestJS.Utils.IO = NestJS.Utils.IO || {}
+﻿var NPhinkJS= NPhinkJS|| {}
+PhinkJS.Utils = PhinkJS.Utils || {}
+PhinkJS.Utils.IO = PhinkJS.Utils.IO || {}
 
 var path = require('path');
 var file = require('fs');
 
-NestJS.Utils.IO.walkTree = function (dir, callback) {
+PhinkJS.Utils.IO.walkTree = function (dir, callback) {
 
     var results = [];
     fs.readdir(dir, function (err, list) {
@@ -29,4 +29,4 @@ NestJS.Utils.IO.walkTree = function (dir, callback) {
     });
 };
 
-module.exports = NestJS.Utils.IO;
+module.exports = PhinkJS.Utils.IO;

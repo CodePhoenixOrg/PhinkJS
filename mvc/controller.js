@@ -1,7 +1,7 @@
 'use strict';
-let NestJSWebObject = require('../web/web_object.js');
+let PhinkJSWebObject = require('../web/web_object.js');
 
-class NestJSMVCController extends NestJSWebObject {
+class PhinkJSMVCController extends PhinkJSWebObject {
     constructor(parent, viewName) {
         super(parent);
         
@@ -51,4 +51,4 @@ class NestJSMVCController extends NestJSWebObject {
 
     }
 }
-module.exports = NestJSMVCController;
+module.exports = PhinkJSMVCController;

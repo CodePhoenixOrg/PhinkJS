@@ -1,12 +1,12 @@
 'use strict';
-let NWebObject = require('./web_object.js');
-let NWebRouter = require('./web_router.js');
-let NRestRouter = require('../rest/rest_router.js');
-let NBaseRouter = require('../core/base_router.js');
+let PhinkJSWebObject = require('./web_object.js');
+let PhinkJSWebRouter = require('./web_router.js');
+let PhinkJSRestRouter = require('../rest/rest_router.js');
+let PhinkJSBaseRouter = require('../core/base_router.js');
 
 let bootstrap = require('../bootstrap');
 
-class NestJSWebApplication extends NWebObject {
+class PhinkJSWebApplication extends PhinkJSWebObject {
     constructor() {
         super(this);
 
@@ -33,13 +33,13 @@ class NestJSWebApplication extends NWebObject {
                     console.error(err);
                 })
 
-                let router = new NBaseRouter(this, req, res);
+                let router = new PhinkJSBaseRouter(this, req, res);
                 router.match();
 
                 if (router.requestType === 'rest') {
-                    router = new NRestRouter(router);
+                    router = new PhinkJSRestRouter(router);
                 } else {
-                    router = new NWebRouter(router);
+                    router = new PhinkJSWebRouter(router);
                 }
 
                 if(body !== '') {
@@ -81,4 +81,4 @@ class NestJSWebApplication extends NWebObject {
     }
 }
 
-module.exports = NestJSWebApplication;
+module.exports = PhinkJSWebApplication;

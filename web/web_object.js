@@ -1,7 +1,7 @@
 'use strict';
-let NestJSObject = require(__dirname + '/../core/object.js');
+let PhinkJSObject = require(__dirname + '/../core/object.js');
 
-class NestJSWebObject extends NestJSObject {
+class PhinkJSWebObject extends PhinkJSObject {
     constructor(parent) {
         super(parent)
 
@@ -17,4 +17,4 @@ class NestJSWebObject extends NestJSObject {
     }
 }
 
-module.exports = NestJSWebObject;
+module.exports = PhinkJSWebObject;

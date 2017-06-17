@@ -4,7 +4,7 @@ let mysql = require('mysql');
 let tunnel = require('tunnel-ssh');
 let fs = require('fs');
 
-class NestJSMySQLConnection {
+class PhinkJSMySQLConnection {
     constructor(config) {
         this.config = config;
     }

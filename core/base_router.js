@@ -1,14 +1,14 @@
 'use strict';
-let NestJSWebObject = require('../web/web_object.js');
-let NestJSRegistry = require('./registry.js');
+let PhinkJSWebObject = require('../web/web_object.js');
+let PhinkJSRegistry = require('./registry.js');
 
 const WEB = 'web';
 const REST = 'rest';
 
-class NestJSRouter extends NestJSWebObject {
+class PhinkJSRouter extends PhinkJSWebObject {
 
     constructor(parent, req, res) {
-        if (parent instanceof NestJSRouter) {
+        if (parent instanceof PhinkJSRouter) {
             super(parent.parent);
             this._request = parent.request;
             this._response = parent.response;
@@ -113,7 +113,7 @@ class NestJSRouter extends NestJSWebObject {
     }
 
     get routes() {
-        let _routes = NestJSRegistry.item('routes');
+        let _routes = PhinkJSRegistry.item('routes');
 
         if (_routes.length === undefined) {
             if (require('fs').existsSync(global.SITE_ROOT + 'routes.json')) {
@@ -124,7 +124,7 @@ class NestJSRouter extends NestJSWebObject {
                 _routes = JSON.parse(_routes);
                 Object.keys(_routes).forEach(function (key) {
                     const value = _routes[key];
-                    NestJSRegistry.write('routes', key, value);
+                    PhinkJSRegistry.write('routes', key, value);
                 });
             }
         }
@@ -139,4 +139,4 @@ class NestJSRouter extends NestJSWebObject {
     dispatch(callback) {}
 }
 
-module.exports = NestJSRouter;
+module.exports = PhinkJSRouter;

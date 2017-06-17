@@ -1,6 +1,6 @@
 'use strict';
 
-class NestJSObject {
+class PhinkJSObject {
     constructor(parent) {
         this._id = '';
         this._name = '';
@@ -34,4 +34,4 @@ class NestJSObject {
 }
 
 
-module.exports = NestJSObject;
+module.exports = PhinkJSObject;

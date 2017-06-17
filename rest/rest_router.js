@@ -1,7 +1,7 @@
 'use strict';
-var NestJSRouter = require('../core/base_router.js');
+var PhinkJSRouter = require('../core/base_router.js');
 
-class NestJSRestRouter extends NestJSRouter {
+class PhinkJSRestRouter extends PhinkJSRouter {
 	constructor(parent, req, res) {
 		super(parent, req, res);
 
@@ -84,4 +84,4 @@ class NestJSRestRouter extends NestJSRouter {
 	}
 }
 
-module.exports = NestJSRestRouter;
+module.exports = PhinkJSRestRouter;
