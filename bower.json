@@ -1,5 +1,5 @@
 {
-  "name": "PhinkJS",
+  "name": "phinkjs",
   "description": "A client and server side JavaScript framework to be used standalone or in Phink PHP projects",
   "main": "bootstrap.js",
   "authors": [
