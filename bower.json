@@ -1,7 +1,7 @@
 {
   "name": "PhinkJS",
   "description": "A client and server side JavaScript framework to be used standalone or in Phink PHP projects",
-  "main": "index.js",
+  "main": "bootstrap.js",
   "authors": [
     "David Blanchard <dblanchard1@bbox.fr>"
   ],
