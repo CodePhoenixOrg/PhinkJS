@@ -32,7 +32,7 @@ BootStrap.init = function () {
 
     }
 
-    let outfile = global.SITE_ROOT + "vendor" + path.sep + "phink" + path.sep + "phink.js";
+    let outfile = global.PHINK_ROOT + "phink.js";
 
     let dir = global.PHINK_ROOT + "client" + path.sep;
     let tree = [
