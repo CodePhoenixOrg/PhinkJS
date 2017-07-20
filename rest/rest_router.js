@@ -43,9 +43,14 @@ class PhinkJSRestRouter extends PhinkJSRouter {
 		console.log(method);
 
 		var fqObject = require(this._apiFileName);
+		var instance = new fqObject();
+
+		console.log("***/***");
+		console.log(instance);
+		console.log("***/***");
 
 		var result = '';
-		if (typeof fqObject[method] === 'function') {
+		if (typeof instance[method] === 'function') {
 			var res = this._response;
 			var req = this._request;
 
@@ -55,7 +60,7 @@ class PhinkJSRestRouter extends PhinkJSRouter {
 
 			Object.keys(data).forEach(function (key) {
 				const value = data[key];
-				const fqProperty = fqObject[key];
+				const fqProperty = instance[key];
 
 				if (typeof fqProperty === 'function') {
 					fqProperty(value);
@@ -65,7 +70,7 @@ class PhinkJSRestRouter extends PhinkJSRouter {
 
 			});
 
-			fqObject[method](function (data) {
+			instance[method](function (data) {
 				//res.statusCode = 200;
 				//res.setHeader('Content-Type', 'application/json');
 				res.writeHead(200, {
