@@ -22,22 +22,24 @@ class PhinkJSWebApplication extends PhinkJSWebObject {
         const baseurl = require('url').parse(url);
         let port = baseurl.port;
 
-        if(baseurl.protocol == 'https' && options !== null && options.key !== undefined && options.cert !== undefined) {
-            const crypto = require('crypto'),
-                fs = require("fs");
+        //baseurl.protocol == 'https' && 
+        if(options !== null && options.key !== undefined && options.cert !== undefined) {
+            const fs = require("fs");
 
             if(fs.existsSync(global.APP_CERT + options.key) 
             && fs.existsSync(global.APP_CERT + options.cert)) {
-                options.key = fs.readFileSync(global.APP_CERT + options.key).toString();
-                options.cert = fs.readFileSync(global.APP_CERT + options.cert).toString();
+                options.key = fs.readFileSync(global.APP_CERT + options.key);
+                options.cert = fs.readFileSync(global.APP_CERT + options.cert);
             }
+            console.log(options);
             require('https').createServer(options, function(req, res) {
-                engine(reg, res, callback);
+                console.log(req);
+                PhinkJSWebApplication.engine(req, res, callback);
             }).listen(port);
 
         } else {
             require('http').createServer(function(req, res) {
-                engine(reg, res, callback);
+                PhinkJSWebApplication.engine(req, res, callback);
             }).listen(port);
 
         }
