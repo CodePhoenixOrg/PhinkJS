@@ -11,6 +11,7 @@ folders.pop();
 
 global.SITE_ROOT = folders.join(path.sep) + path.sep;
 global.APP_ROOT = global.SITE_ROOT + 'app' + path.sep;
+global.APP_CERT = global.APP_ROOT + 'certs' + path.sep;
 global.APP_DATA = global.APP_ROOT + 'data' + path.sep;
 global.APP_MODELS = global.APP_ROOT + 'models' + path.sep;
 global.APP_CONTROLLERS = global.APP_ROOT + 'controllers' + path.sep;
