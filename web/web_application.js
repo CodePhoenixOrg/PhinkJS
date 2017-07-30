@@ -17,8 +17,24 @@ class PhinkJSWebApplication extends PhinkJSWebObject {
         return this._headers;
     }
 
-    static create(url, port, callback) {
-        require('http').createServer(function (req, res) {
+    static create(url, options, callback) {
+
+        const baseurl = require('url').parse(url);
+        let port = baseurl.port;
+
+        if(baseurl.protocol == 'https' && options !== null && options.key !== undefined && options.cert !== undefined) {
+            const crypto = require('crypto'),
+                fs = require("fs");
+
+            if(fs.existsSync(global.APP_CERT + options.key) 
+            && fs.existsSync(global.APP_CERT + options.crt)) {
+                options.key = fs.readFileSync(global.APP_CERT + options.key).toString();
+                options.cert = fs.readFileSync(global.APP_CERT + options.crt).toString();
+
+            }
+        }
+
+        require('http').createServer(options, function (req, res) {
             let body = [];
             let self = this;
 
@@ -68,10 +84,8 @@ class PhinkJSWebApplication extends PhinkJSWebObject {
 
             }).on('finish', function () {
                 res.end();
-                console.log("FINISH");
                 req.emit('close');
             }).on('close', function () {
-                console.log("CLOSE");
                 req = null;
                 res = null;
             });
