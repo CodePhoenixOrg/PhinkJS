@@ -27,9 +27,9 @@ class PhinkJSWebApplication extends PhinkJSWebObject {
                 fs = require("fs");
 
             if(fs.existsSync(global.APP_CERT + options.key) 
-            && fs.existsSync(global.APP_CERT + options.crt)) {
+            && fs.existsSync(global.APP_CERT + options.cert)) {
                 options.key = fs.readFileSync(global.APP_CERT + options.key).toString();
-                options.cert = fs.readFileSync(global.APP_CERT + options.crt).toString();
+                options.cert = fs.readFileSync(global.APP_CERT + options.cert).toString();
 
             }
         }
