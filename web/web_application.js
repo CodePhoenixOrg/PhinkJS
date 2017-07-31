@@ -31,9 +31,8 @@ class PhinkJSWebApplication extends PhinkJSWebObject {
                 options.key = fs.readFileSync(global.APP_CERT + options.key);
                 options.cert = fs.readFileSync(global.APP_CERT + options.cert);
             }
-            console.log(options);
+            console.log('Is secure');
             require('https').createServer(options, function(req, res) {
-                console.log(req);
                 PhinkJSWebApplication.engine(req, res, callback);
             }).listen(port);
 
