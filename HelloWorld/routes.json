@@ -1,0 +1,16 @@
+{
+    "rest": {
+        "get": {
+            "/api/my/([0-9]+)$": "/rest/my?my=$1"
+        },
+        "put": {
+            "/api/my/([0-9]+)$": "/rest/my?my=$1"        },
+        "delete": {
+            "/api/my/([0-9]+)$": "/rest/my?my=$1"        }
+    },
+    "web": {
+        "get": {
+            "/my$": "/views/index.html"
+        }
+    }
+}
