@@ -22,28 +22,58 @@ var main = (mainNode.length > 0 && mainNode[0].dataset.init !== undefined) ? mai
 
 Phink.DOM.ready(function () {
   
-    var loadDepends = function(callback) {
-        if(depends.length > 0) {
-            for (var i = 0; i < depends.length; i++) {
-                Phink.include(depends[i], function(e) {
-                    if(i === depends.length) {
-                        if(typeof callback === 'function') {
-                            callback.call(null);    
-                        }
-                    
+//    var loadDepends = function(callback) {
+//        if(depends.length > 0) {
+//            for (var i = 0; i < depends.length; i++) {
+//                Phink.include(depends[i], function(e) {
+//                    if(i === depends.length) {
+//                        if(typeof callback === 'function') {
+//                            callback.call(null);
+//                        }
+//                    
+//                    }
+//                });
+//            }
+//
+//        } else {
+//            if(typeof callback === 'function') {
+//                callback.call(this);
+//            }
+//        }
+//      
+//    }
+    
+    var loadDepends = function(scripts, complete) {
+        var loadDepends = function( src ) {
+            var xmlhttp, next;
+            if (window.XMLHttpRequest)  {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                try {
+                     xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                } catch(e) {
+                    return;
+                }
+            }
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    eval(xmlhttp.responseText);
+                    next = scripts.shift();
+                    if ( next ) {
+                        loadScript(next);
+                    } else if ( typeof complete == 'function' ) {
+                        complete();
                     }
-                });
+                }
             }
+            xmlhttp.open("GET", src , true);
+            xmlhttp.send();
+        };
 
-        } else {
-            if(typeof callback === 'function') {
-                callback.call(this);
-            }
-        }
-      
-    }
+        loadDepends( scripts.shift() );
+    }    
 
-    loadDepends(function () {
+    loadDepends(depends, function () {
       for (var i = 0; i < sources.length; i++) {
           Phink.include(sources[i], function(e) {
               if(typeof window[main] === 'function') {
