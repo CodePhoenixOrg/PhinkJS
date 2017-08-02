@@ -6,7 +6,10 @@ let folders = __dirname.split(path.sep);
 
 global.PHINK_ROOT = folders.join(path.sep) + path.sep;
 
-folders.pop();
+if(global.PHINK_ROOT.indexOf('bower_components') > -1 || global.PHINK_ROOT.indexOf('vendor')) {
+    folders.pop();
+    folders.pop();
+}
 folders.pop();
 
 global.SITE_ROOT = folders.join(path.sep) + path.sep;

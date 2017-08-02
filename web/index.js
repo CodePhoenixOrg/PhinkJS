@@ -1,6 +1,6 @@
 'use strict';
 
-var app = require('../src/phinkjs/web/web_application');
+var app = require('../src/web/web_application');
 
 app.create('http://sample.loc:1234', null, function (req, res, data) {
     // console.log(req.headers);
