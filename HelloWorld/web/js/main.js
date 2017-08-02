@@ -15,7 +15,16 @@ var sayHello = function () {
 
 var printHello = function () {
 
-    var hello = document.querySelector("#hello");
-    hello.innerHTML = sayHello();
+    /**
+     * Native javascript
+     */ 
+    // var hello = document.querySelector("#hello");
+    // hello.innerHTML = sayHello();
+
+    /**
+     * jQuery enabled
+     */
+    var message = sayHello();
+    $('#hello').html(message);
 
 }
