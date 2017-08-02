@@ -23,7 +23,6 @@ var main = (mainNode.length > 0 && mainNode[0].dataset.init !== undefined) ? mai
 Phink.DOM.ready(function () {
 
     var loadDepends = function (scripts, callback) {
-        console.log(scripts);
 
         if (scripts.length > 0) {
             for (var i = 0; i < scripts.length; i++) {
@@ -46,7 +45,6 @@ Phink.DOM.ready(function () {
     }
 
     var dependsOn = function (scripts, callback) {
-        console.log(scripts);
 
         var dependsOn = function (src) {
             var xmlhttp, next;
@@ -79,8 +77,34 @@ Phink.DOM.ready(function () {
             callback();
         }
     }
+    
+    var loadDeps = function (scripts, callback) {
 
-    dependsOn(depends, function () {
+        var loadDeps = function (src) {
+            var next;
+            var tag = document.createElement("script");
+            tag.src = src;
+            tag.type = "text/javascript";
+
+            tag.addEventListener('load', function (e) {
+                next = scripts.shift();
+                if (next) {
+                    loadDeps(next);
+                } else if (typeof callback == 'function') {
+                    callback();
+                }
+            })
+            document.body.appendChild(tag);
+
+        };
+        if (scripts.length > 0) {
+            loadDeps(scripts.shift());
+        } else if (typeof callback == 'function') {
+            callback();
+        }
+    }
+
+    loadDeps(depends, function () {
         for (var i = 0; i < sources.length; i++) {
             Phink.include(sources[i], function (e) {
                 if (typeof window[main] === 'function') {
