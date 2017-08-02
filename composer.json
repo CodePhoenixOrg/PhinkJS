@@ -5,9 +5,9 @@
     "authors": [
         {
             "name": "David Blanchard",
-            "email": "dblanchard1@bbox.fr",
+            "email": "dblanchard1.at.bbox.dot.fr",
             "homepage": "https://phink.org",
-            "role": "Developer"
+            "role": "Project Owner"
         }
     ],    
     "require": {

@@ -96,7 +96,8 @@ Phink.Utils.base64Decode = function (data) {
     while (i < data.length);
 
     dec = tmp_arr.join('');
-    dec = this.utf8_decode(dec);
+    dec = Phink.Utils.utf8Decode(dec);
+
     return dec;
 }
 
@@ -168,5 +169,6 @@ Phink.Utils.utf8Encode = function (argString) {
     if (end > start) {
         utftext += string.slice(start, stringl);
     }
+    
     return utftext;
 }
