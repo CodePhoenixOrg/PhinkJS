@@ -10,7 +10,7 @@
     },
     "web": {
         "get": {
-            "/my$": "/views/index.html"
+            "/$": "/views/index.html"
         }
     }
 }

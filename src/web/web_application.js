@@ -23,7 +23,7 @@ class PhinkJSWebApplication extends PhinkJSWebObject {
         let port = baseurl.port;
 
         //baseurl.protocol == 'https' && 
-        if(options !== null && options.key !== undefined && options.cert !== undefined) {
+        if(options !== undefined && options.key !== undefined && options.cert !== undefined) {
             const fs = require("fs");
 
             if(fs.existsSync(global.APP_CERT + options.key) 
@@ -76,14 +76,14 @@ class PhinkJSWebApplication extends PhinkJSWebObject {
             
             router.translate(function (exists) {
                 if (exists) {
-                    router.dispatch(function (rreq, rres, stream) {
-                        self._headers = rreq.headers;
+                    router.dispatch(function (req, res, stream) {
+                        self._headers = req.headers;
                         if (typeof callback === 'function') {
-                            callback(rreq, rres, stream);
+                            callback(req, res, stream);
                         }
 
-                        rres.write(stream);
-                        rreq.emit('finish');
+                        res.write(stream);
+                        req.emit('finish');
                     });
                 } else {
                     res.writeHead(404, {
