@@ -1,15 +1,22 @@
 {
-    "license": "GPL-3.0+",
     "name": "phink/phinkjs",
+    "type": "library",
     "description": "Client and server side Javascript framework",
+    "homepage": "https://phink.org",
+    "license": "GPL-3.0+",
     "authors": [
         {
             "name": "David Blanchard",
             "email": "dblanchard1@bbox.fr",
-            "homepage": "https://phink.org",
+            "homepage": "https://code-phoenix.org",
             "role": "Developer"
         }
     ],    
     "require": {
+        "components/jquery": ">=1.9.1",
+        "components/jqueryui": ">=1.12.1",
+        "components/font-awesome": "=4.7.0",
+        "components/bootstrap": "=3.3.5",
+        "components/bootstrap-default": "=3.3.5"
     }
 }
