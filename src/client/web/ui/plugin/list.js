@@ -24,7 +24,6 @@ Phink.Web.UI.List.prototype.bind = function(container, data, callback) {
 
     var result = '';
     var html = '';
-    var row = 0;
     var css = '';
 
     result = str_replace('%s', css, elements[0].opening) + "\n";
@@ -32,7 +31,7 @@ Phink.Web.UI.List.prototype.bind = function(container, data, callback) {
     
     for(i = 0; i < rowNum; i++) {
 
-        row = (values[i] !== null) ? JSON.parse(values[i]) : Array.apply(null, Array(colNum)).map(String.prototype.valueOf, '&nbsp;');
+        var row = (values[i] !== null) ? values[i] : Array.apply(null, Array(colNum)).map(String.prototype.valueOf, '&nbsp;');
 
         result += str_replace('%s', '', elements[1].opening) + "\n";
         for(j = 0; j < colNum; j++) {

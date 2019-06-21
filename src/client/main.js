@@ -80,7 +80,7 @@ Phink.DOM.ready(function () {
     
     var loadDeps = function (scripts, callback) {
 
-        var loadDeps = function (src) {
+        var F = function (src) {
             var next;
             var tag = document.createElement("script");
             tag.src = src;
@@ -89,7 +89,7 @@ Phink.DOM.ready(function () {
             tag.addEventListener('load', function (e) {
                 next = scripts.shift();
                 if (next) {
-                    loadDeps(next);
+                    F(next);
                 } else if (typeof callback == 'function') {
                     callback();
                 }
@@ -98,7 +98,7 @@ Phink.DOM.ready(function () {
 
         };
         if (scripts.length > 0) {
-            loadDeps(scripts.shift());
+            F(scripts.shift());
         } else if (typeof callback == 'function') {
             callback();
         }

@@ -13,7 +13,6 @@ Phink.Web.UI.Accordion.create = function() {
     return new Phink.Web.UI.Accordion();
 };
 
-
 Phink.Web.UI.Accordion.prototype.bind = function(container, data, callback) {
     var names = data.names;
     var values = data.values;
@@ -26,7 +25,6 @@ Phink.Web.UI.Accordion.prototype.bind = function(container, data, callback) {
     var result = '';
     var html = '';
     var level = 0;
-    var row = 0;
     var index = 0;
     var canBind = 0;
     var bound = [false, false, false];
@@ -35,7 +33,7 @@ Phink.Web.UI.Accordion.prototype.bind = function(container, data, callback) {
     var oldValues = Array.apply(null, Array(colNum)).map(String.prototype.valueOf, '!#');
 
     for(var k = 0; k < templateNum; k++) {
-        for(j = 0; j < colNum; j++) {
+        for(var j = 0; j < colNum; j++) {
             if(templates[k].name === names[j]) {
                 templates[k].index = j;
             }
@@ -44,7 +42,7 @@ Phink.Web.UI.Accordion.prototype.bind = function(container, data, callback) {
 
     for(var i = 0; i < rowNum; i++) {
 
-        row = (values[i] !== null) ? JSON.parse(values[i]) : Array.apply(null, Array(colNum)).map(String.prototype.valueOf, '&nbsp;');
+        var row = (values[i] !== null) ? values[i] : Array.apply(null, Array(colNum)).map(String.prototype.valueOf, '&nbsp;');
         for(var j = 0; j < templateNum; j++) {
              if(j === 0) {
                 level = 0;
