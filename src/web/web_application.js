@@ -1,10 +1,10 @@
 'use strict';
-let PhinkJSWebObject = require('./web_object.js');
-let PhinkJSWebRouter = require('./web_router.js');
-let PhinkJSRestRouter = require('../rest/rest_router.js');
-let PhinkJSBaseRouter = require('../core/base_router.js');
+import PhinkJSWebObject from './web_object.js';
+import PhinkJSWebRouter from './web_router.js';
+import PhinkJSRestRouter from '../rest/rest_router.js';
+import PhinkJSBaseRouter from '../core/base_router.js';
 
-let bootstrap = require('../bootstrap');
+import bootstrap from '../bootstrap';
 
 class PhinkJSWebApplication extends PhinkJSWebObject {
     constructor() {
@@ -105,4 +105,4 @@ class PhinkJSWebApplication extends PhinkJSWebObject {
     }
 }
 
-module.exports = PhinkJSWebApplication;
+export default PhinkJSWebApplication;

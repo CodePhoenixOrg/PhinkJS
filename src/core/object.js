@@ -25,13 +25,12 @@ class PhinkJSObject {
         return this._name;
     }
 
-    set parent(parent) {
-        this._parent = (parent !== undefined) ? parent : null;
+    set parent(value = null) {
+        this._parent = value;
     }
     get parent() {
         return this._parent;
     }
 }
 
-
-module.exports = PhinkJSObject;
+export default PhinkJSObject;

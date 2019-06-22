@@ -1,5 +1,5 @@
 'use strict';
-var PhinkJSRouter = require('../core/base_router.js');
+import PhinkJSRouter from '../core/base_router.js';
 
 class PhinkJSRestRouter extends PhinkJSRouter {
 	constructor(parent, req, res) {
@@ -89,4 +89,4 @@ class PhinkJSRestRouter extends PhinkJSRouter {
 	}
 }
 
-module.exports = PhinkJSRestRouter;
+export default PhinkJSRestRouter;

@@ -1,4 +1,4 @@
-var Phink = function () { }
+var Phink = {}
 Phink.DOM = Phink.DOM || {}
 Phink.DOM.ready = function (f) { /in/.test(document.readyState) ? setTimeout('Phink.DOM.ready(' + f + ')', 9) : f() }
 

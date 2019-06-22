@@ -1,6 +1,6 @@
 'use strict';
-let PhinkJSWebObject = require('../web/web_object.js');
-let PhinkJSRegistry = require('./registry.js');
+import PhinkJSWebObject from '../web/web_object.js';
+import { item, write } from './registry.js';
 
 const WEB = 'web';
 const REST = 'rest';
@@ -29,8 +29,6 @@ class PhinkJSRouter extends PhinkJSWebObject {
             this._className = '';
             this._parameters = null;
         }
-
-
 
         this._mimetype = '';
         this._encoding = '';
@@ -113,7 +111,7 @@ class PhinkJSRouter extends PhinkJSWebObject {
     }
 
     get routes() {
-        let _routes = PhinkJSRegistry.item('routes');
+        let _routes = item('routes');
 
         if (_routes.length === undefined) {
             if (require('fs').existsSync(global.SITE_ROOT + 'routes.json')) {
@@ -124,7 +122,7 @@ class PhinkJSRouter extends PhinkJSWebObject {
                 _routes = JSON.parse(_routes);
                 Object.keys(_routes).forEach(function (key) {
                     const value = _routes[key];
-                    PhinkJSRegistry.write('routes', key, value);
+                    write('routes', key, value);
                 });
             }
         }
@@ -139,4 +137,4 @@ class PhinkJSRouter extends PhinkJSWebObject {
     dispatch(callback) {}
 }
 
-module.exports = PhinkJSRouter;
+export default PhinkJSRouter;

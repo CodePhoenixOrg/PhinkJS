@@ -2,8 +2,7 @@
 PhinkJS.Utils = PhinkJS.Utils || {}
 PhinkJS.Utils.IO = PhinkJS.Utils.IO || {}
 
-var path = require('path');
-var file = require('fs');
+import { resolve } from 'path';
 
 PhinkJS.Utils.IO.walkTree = function (dir, callback) {
 
@@ -14,7 +13,7 @@ PhinkJS.Utils.IO.walkTree = function (dir, callback) {
         if (pending === 0) return callback.call(null, results);
 
         list.forEach(function (file) {
-            file = path.resolve(dir, file);
+            file = resolve(dir, file);
             fs.stat(file, function (err, stat) {
                 if (stat && stat.isDirectory()) {
                     pending--;
@@ -29,4 +28,4 @@ PhinkJS.Utils.IO.walkTree = function (dir, callback) {
     });
 };
 
-module.exports = PhinkJS.Utils.IO;
+export default PhinkJS.Utils.IO;

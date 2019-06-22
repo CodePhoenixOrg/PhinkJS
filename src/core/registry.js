@@ -68,4 +68,4 @@ let Registry = new (class {
 
 })();
 
-module.exports = Registry;
+export default Registry;

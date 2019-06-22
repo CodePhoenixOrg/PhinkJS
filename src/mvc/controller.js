@@ -1,5 +1,5 @@
 'use strict';
-let PhinkJSWebObject = require('../web/web_object.js');
+import PhinkJSWebObject from '../web/web_object.js';
 
 class PhinkJSMVCController extends PhinkJSWebObject {
     constructor(parent, viewName) {
@@ -51,4 +51,4 @@ class PhinkJSMVCController extends PhinkJSWebObject {
 
     }
 }
-module.exports = PhinkJSMVCController;
+export default PhinkJSMVCController;

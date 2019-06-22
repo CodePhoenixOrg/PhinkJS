@@ -17,4 +17,4 @@ class PhinkJSWebObject extends PhinkJSObject {
     }
 }
 
-module.exports = PhinkJSWebObject;
+export default PhinkJSWebObject;

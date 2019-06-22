@@ -1,5 +1,5 @@
 'use strict';
-let PhinkJSRouter = require('../core/base_router.js');
+import PhinkJSRouter from '../core/base_router.js';
 
 class PhinkJSWebRouter extends PhinkJSRouter {
     constructor(parent, req, res) {
@@ -62,7 +62,7 @@ class PhinkJSWebRouter extends PhinkJSRouter {
             return true;
         }
  
-        require('./web_object').include(this._filePath, encoding, function (err, stream) {
+        require('./web_object').default.include(this._filePath, encoding, function (err, stream) {
             if (!err) {
 
                 res.writeHead(200, {
@@ -79,4 +79,4 @@ class PhinkJSWebRouter extends PhinkJSRouter {
     }
 }
 
-module.exports = PhinkJSWebRouter;
+export default PhinkJSWebRouter;

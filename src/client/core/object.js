@@ -1,38 +1,27 @@
-var Phink = Phink || {}
+var Phink = Phink || {};
 
-Phink.Object = function() {
-    this.id = '';
-    this.name = '';
-    this.parent = null;
-    
-};
-
-Phink.Object.prototype.setId = function(value) {
-    this.id = value;
-    
-    return this;
-};
-
-Phink.Object.prototype.getId = function() {
-    return this.id;
-};
-
-Phink.Object.prototype.setName = function(value) {
-    this.name = value;
-    
-    return this;
-};
-
-Phink.Object.prototype.getName = function() {
-    return this.name;
-};
-
-//Phink.Object.prototype.setParent = function(value) {
-//    this.parent = value;
-//    
-//    return this;
-//};
-
-Phink.Object.prototype.getParent = function() {
-    return this.parent;
-};
+Phink.Object = class F {
+    constructor(parent = null) {
+        this._id = '';
+        this._name = '';
+        this._parent = parent;
+    }
+    set id(value) {
+        this._id = value;
+    }
+    get id() {
+        return this._id;
+    }
+    set name(value) {
+        this._name = value;
+    }
+    get name() {
+        return this._name;
+    }
+    set parent(value) {
+        this._parent = value;
+    }
+    get parent() {
+        return this._parent;
+    }
+}
