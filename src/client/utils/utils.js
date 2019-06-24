@@ -1,17 +1,18 @@
 var Phink = Phink || {}
 
-Phink.Utils = class F {
+Phink.Utils = class T {
     constructor() {
     }
     static find(haystack, index, needle) {
         var result = [];
-        if (haystack.length === 0)
+        if (haystack.length === 0) {
             return result;
-        var first = JSON.parse(haystack[0]);
+        }
+        var first = (Array.isArray(haystack[0])) ? haystack[0] : JSON.parse(haystack[0]);
         if (first.length < index - 1)
             return result;
         for (var k = 0; k < haystack.length; ++k) {
-            var row = JSON.parse(haystack[k]);
+            var row = (Array.isArray(haystack[k])) ? haystack[k] : JSON.parse(haystack[k]);
             if (needle == row[index]) {
                 result = row;
                 break;
@@ -30,11 +31,11 @@ Phink.Utils = class F {
         var result = [];
         if (haystack.length === 0)
             return result;
-        var first = JSON.parse(haystack[0]);
+        var first = (Array.isArray(haystack[0])) ? haystack[0] : JSON.parse(haystack[0]);
         if (!first.hasOwnProperty(key))
             return result;
         for (var k = 0; k < haystack.length; ++k) {
-            var row = JSON.parse(haystack[k]);
+            var row = (Array.isArray(haystack[k])) ? haystack[k] : JSON.parse(haystack[k]);
             if (needle == row[key]) {
                 result = row;
                 break;
@@ -46,7 +47,7 @@ Phink.Utils = class F {
         ui.style.height = ui.contentWindow.document.body.scrollHeight + 'px';
     }
     static html64(container, html) {
-        $(container).html(F.base64Decode(html));
+        $(container).html(T.base64Decode(html));
     }
     static secondsToString(seconds) {
         var minutes = Math.floor(seconds / 60);
@@ -80,7 +81,7 @@ Phink.Utils = class F {
             }
         } while (i < data.length);
         dec = tmp_arr.join('');
-        dec = F.utf8Decode(dec);
+        dec = T.utf8Decode(dec);
         return dec;
     }
     static base64Encode(data) {
@@ -89,7 +90,7 @@ Phink.Utils = class F {
         }
         var b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
         var o1, o2, o3, h1, h2, h3, h4, bits, i = 0, ac = 0, enc = "", tmp_arr = [];
-        data = F.utf8Encode(data + '');
+        data = T.utf8Encode(data + '');
         do {
             o1 = data.charCodeAt(i++);
             o2 = data.charCodeAt(i++);

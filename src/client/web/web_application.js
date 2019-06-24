@@ -2,16 +2,15 @@ var Phink = Phink || {}
 
 Phink.Web = Phink.Web || {}
 
-Phink.Web.Application = class F extends Phink.Web.Object {
+Phink.Web.Application = class Z extends Phink.Web.Object {
     constructor(domain, name, isSSL) {
-        // Phink.Web.Object.call(this, domain, isSSL);
-        super(domain, isSSL);
+        super();
         this.id = 'app' + Date.now();
         if (name === undefined) {
             name = this.id;
         }
         this.name = name;
-        //this.domain = domain;
+        this.domain = domain;
         this.viewCollection = [];
         this.controllerCollection = [];
     }
@@ -26,7 +25,8 @@ Phink.Web.Application = class F extends Phink.Web.Object {
         this.addView(newView);
         return newView;
     }
-    createController(view, name) {
+    createController(viewName, name) {
+        var view = this.getViewByName(viewName);
         var newCtrl = Phink.MVC.Controller.create(view, name);
         this.addController(newCtrl);
         return newCtrl;
@@ -34,7 +34,7 @@ Phink.Web.Application = class F extends Phink.Web.Object {
     getViewByName(viewName) {
         var result = null;
         for (var name in this.viewCollection) {
-            if (this.viewCollection[name] !== undefined) {
+            if (name === viewName && this.viewCollection[name] !== undefined) {
                 result = this.viewCollection[name];
                 break;
             }

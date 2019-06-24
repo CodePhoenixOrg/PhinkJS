@@ -2,7 +2,7 @@ var Phink = Phink || {}
 
 Phink.Registry = (function () {
     
-    class F {
+    class R {
         constructor() {
             this.registry = {};
         }
@@ -20,9 +20,15 @@ Phink.Registry = (function () {
             return result;
         }
         item(item) {
-            if (item === '' || item === undefined)
+            if(item == '') {
+                item = '#';
+            }
+
+            if (item === null || item === undefined) {
                 return null;
-            if (this.registry[item] !== undefined) {
+            }
+
+            if (this.registry[item] !== undefined && this.registry[item] !== null) {
                 return this.registry[item];
             }
             else {
@@ -52,5 +58,5 @@ Phink.Registry = (function () {
         }
     }
 
-    return new F();
+    return new R();
 })();

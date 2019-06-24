@@ -2,9 +2,9 @@ var Phink = Phink || {}
 
 Phink.MVC = Phink.MVC || {}
 
-Phink.MVC.View = class F extends Phink.Web.Object {
+Phink.MVC.View = class V extends Phink.Web.Object {
     constructor(application, name) {
-        super(application);
+        super();
         this.id = 'view' + Date.now();
         this.domain = (application !== undefined) ? application.getDomain() : '';
         this.token = '';

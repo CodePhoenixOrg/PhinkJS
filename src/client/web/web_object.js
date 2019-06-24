@@ -2,7 +2,7 @@ var Phink = Phink || {}
 
 Phink.Web = Phink.Web || {}
 
-Phink.Web.Object = class F extends Phink.Object {
+Phink.Web.Object = class W extends Phink.Object {
     constructor(domain, isSSL) {
         super();
         this.parent = this;

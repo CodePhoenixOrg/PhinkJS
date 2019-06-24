@@ -2,20 +2,20 @@ var Phink = Phink || {}
 Phink.Web = Phink.Web || {}
 Phink.Web.UI = Phink.Web.UI || {}
 
-Phink.Web.UI.Table = class F extends Phink.Web.UI.Plugin {
+Phink.Web.UI.Table = class Q extends Phink.Web.UI.Plugin {
     constructor() {
-        super(this);
+        super();
     }
     bind(tableId, data, callback) {
-        var values = data.values;
-        var templates = data.templates;
-        var colNum = templates.length;
-        var rowNum = values.length;
-        for (var j = 0; j < rowNum; j++) {
-            var row = values[j];
-            for (var i = 0; i < colNum; i++) {
-                var template = templates[i];
-                var html = Phink.Web.UI.Plugin.applyTemplate(templates, row, i);
+        let values = data.values;
+        let templates = data.templates;
+        let colNum = templates.length;
+        let rowNum = values.length;
+        for (let j = 0; j < rowNum; j++) {
+            let row = values[j];
+            for (let i = 0; i < colNum; i++) {
+                let template = templates[i];
+                let html = Phink.Web.UI.Plugin.applyTemplate(templates, row, i);
                 if (template.enabled) {
                     $(tableId + 'td' + (i + colNum * j).toString()).html(html);
                 }

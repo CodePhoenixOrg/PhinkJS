@@ -1,7 +1,7 @@
 var Phink = Phink || {}
 
 Phink.Rest = (function() {
-    class F {
+    class S {
         constructor() {
         }
         /**
@@ -164,6 +164,6 @@ Phink.Rest = (function() {
         }
     }
 
-    return new F()
+    return new S()
 })()
 

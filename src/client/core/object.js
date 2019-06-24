@@ -1,6 +1,6 @@
 var Phink = Phink || {};
 
-Phink.Object = class F {
+Phink.Object = class O {
     constructor(parent = null) {
         this._id = '';
         this._name = '';

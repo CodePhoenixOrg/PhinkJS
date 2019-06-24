@@ -1,7 +1,7 @@
 'use strict';
+let PhinkJS = global.PhinkJS || {};
 
-
-let Registry = new (class {
+PhinkJS.Registry = new (class {
 
     constructor() {
         this._registry = {};
@@ -68,4 +68,4 @@ let Registry = new (class {
 
 })();
 
-export default Registry;
+module.exports = PhinkJS.Registry;

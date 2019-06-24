@@ -1,7 +1,10 @@
 'use strict';
-import PhinkJSWebObject from '../web/web_object.js';
+let PhinkJS = global.PhinkJS || {};
+PhinkJS.Web = PhinkJS.Web || {};
+PhinkJS.MVC = PhinkJS.MVC || {};
 
-class PhinkJSMVCView extends PhinkJSWebObject {
+PhinkJS.Web.Object = require('../web/web_object.js');
+PhinkJS.MVC.View = class F extends PhinkJS.Web.Object {
 
     constructor(parent, viewName) {
         super(parent);
@@ -18,4 +21,4 @@ class PhinkJSMVCView extends PhinkJSWebObject {
     }
 }
 
-export default PhinkJSMVCView;
+module.exports = PhinkJS.MVC.View;

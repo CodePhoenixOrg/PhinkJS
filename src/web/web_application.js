@@ -1,12 +1,18 @@
 'use strict';
-import PhinkJSWebObject from './web_object.js';
-import PhinkJSWebRouter from './web_router.js';
-import PhinkJSRestRouter from '../rest/rest_router.js';
-import PhinkJSBaseRouter from '../core/base_router.js';
+let PhinkJS = global.PhinkJS || {};
 
-import bootstrap from '../bootstrap';
+PhinkJS.BaseRouter = require('../core/base_router.js');
 
-class PhinkJSWebApplication extends PhinkJSWebObject {
+PhinkJS.Web = PhinkJS.Web || {};
+PhinkJS.Web.Object = require('./web_object.js');
+PhinkJS.Web.Router = require('./web_router.js');
+
+PhinkJS.Rest = PhinkJS.Rest || {};
+PhinkJS.Rest.Router = require('../rest/rest_router.js');
+
+require('../bootstrap');
+
+PhinkJS.Web.Application = class F extends PhinkJS.Web.Object {
     constructor() {
         super(this);
 
@@ -33,12 +39,12 @@ class PhinkJSWebApplication extends PhinkJSWebObject {
             }
             console.log('Is secure');
             require('https').createServer(options, function(req, res) {
-                PhinkJSWebApplication.engine(req, res, callback);
+                F.engine(req, res, callback);
             }).listen(port);
 
         } else {
             require('http').createServer(function(req, res) {
-                PhinkJSWebApplication.engine(req, res, callback);
+                F.engine(req, res, callback);
             }).listen(port);
 
         }
@@ -61,13 +67,13 @@ class PhinkJSWebApplication extends PhinkJSWebObject {
                 console.error(err);
             })
 
-            let router = new PhinkJSBaseRouter(this, req, res);
+            let router = new PhinkJS.BaseRouter(this, req, res);
             router.match();
 
             if (router.requestType === 'rest') {
-                router = new PhinkJSRestRouter(router);
+                router = new PhinkJS.Rest.Router(router);
             } else {
-                router = new PhinkJSWebRouter(router);
+                router = new PhinkJS.Web.Router(router);
             }
 
             if(body !== '') {
@@ -105,4 +111,4 @@ class PhinkJSWebApplication extends PhinkJSWebObject {
     }
 }
 
-export default PhinkJSWebApplication;
+module.exports = PhinkJS.Web.Application;

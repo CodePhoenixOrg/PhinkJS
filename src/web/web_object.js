@@ -1,7 +1,10 @@
 'use strict';
-let PhinkJSObject = require(__dirname + '/../core/object.js');
+let PhinkJS = global.PhinkJS || {};
+PhinkJS.Web = PhinkJS.Web || {};
 
-class PhinkJSWebObject extends PhinkJSObject {
+PhinkJS.Object = require(__dirname + '/../core/object.js');
+
+PhinkJS.Web.Object = class F extends PhinkJS.Object {
     constructor(parent) {
         super(parent)
 
@@ -17,4 +20,4 @@ class PhinkJSWebObject extends PhinkJSObject {
     }
 }
 
-export default PhinkJSWebObject;
+module.exports = PhinkJS.Web.Object;

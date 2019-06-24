@@ -1,5 +1,5 @@
 'use strict';
 
-import { create } from '../src/web/web_application';
+var app = require('../src/web/web_application');
 
-create('http://localhost:1234');
+app.create('http://localhost:1234');

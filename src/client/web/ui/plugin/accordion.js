@@ -2,8 +2,9 @@ var Phink = Phink || {}
 Phink.Web = Phink.Web || {}
 Phink.Web.UI = Phink.Web.UI || {}
 
-Phink.Web.UI.Accordion = class F extends Phink.Web.UI.Plugin {
+Phink.Web.UI.Accordion = class A extends Phink.Web.UI.Plugin {
     constructor() {
+        super();
     }
     bind(container, data, callback) {
         var names = data.names;
@@ -19,7 +20,6 @@ Phink.Web.UI.Accordion = class F extends Phink.Web.UI.Plugin {
         var index = 0;
         var canBind = 0;
         var bound = [false, false, false];
-        num = 0;
         var oldValues = Array.apply(null, Array(colNum)).map(String.prototype.valueOf, '!#');
         for (var k = 0; k < templateNum; k++) {
             for (var j = 0; j < colNum; j++) {

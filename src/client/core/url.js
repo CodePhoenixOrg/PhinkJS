@@ -1,6 +1,6 @@
 var Phink = Phink || {}
 
-Phink.Url = class F {
+Phink.Url = class U {
     constructor(url, domain, isSSL) {
         this.url = url;
         this.isParsed = false;
