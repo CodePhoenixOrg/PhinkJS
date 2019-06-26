@@ -2,35 +2,35 @@ var Phink = Phink || {}
 Phink.Web = Phink.Web || {}
 Phink.Web.UI = Phink.Web.UI || {}
 
-Phink.Web.UI.Accordion = class A extends Phink.Web.UI.Plugin {
+Phink.Web.UI.Accordion = class M extends Phink.Web.UI.Plugin {
     constructor() {
         super();
     }
     bind(container, data, callback) {
-        var names = data.names;
-        var values = data.values;
-        var templates = data.templates;
-        var elements = data.elements;
-        var templateNum = templates.length;
-        var colNum = names.length;
-        var rowNum = values.length;
-        var result = '';
-        var html = '';
-        var level = 0;
-        var index = 0;
-        var canBind = 0;
-        var bound = [false, false, false];
-        var oldValues = Array.apply(null, Array(colNum)).map(String.prototype.valueOf, '!#');
-        for (var k = 0; k < templateNum; k++) {
-            for (var j = 0; j < colNum; j++) {
+        let names = data.names;
+        let values = data.values;
+        let templates = data.templates;
+        let elements = data.elements;
+        let templateNum = templates.length;
+        let colNum = names.length;
+        let rowNum = values.length;
+        let result = '';
+        let html = '';
+        let level = 0;
+        let index = 0;
+        let canBind = 0;
+        let bound = [false, false, false];
+        let oldValues = Array.apply(null, Array(colNum)).map(String.prototype.valueOf, '!#');
+        for (let k = 0; k < templateNum; k++) {
+            for (let j = 0; j < colNum; j++) {
                 if (templates[k].name === names[j]) {
                     templates[k].index = j;
                 }
             }
         }
-        for (var i = 0; i < rowNum; i++) {
-            var row = (values[i] !== null) ? values[i] : Array.apply(null, Array(colNum)).map(String.prototype.valueOf, '&nbsp;');
-            for (var j = 0; j < templateNum; j++) {
+        for (let i = 0; i < rowNum; i++) {
+            let row = (values[i] !== null) ? values[i] : Array.apply(null, Array(colNum)).map(String.prototype.valueOf, '&nbsp;');
+            for (let j = 0; j < templateNum; j++) {
                 if (j === 0) {
                     level = 0;
                 }

@@ -18,10 +18,10 @@ Phink.Web.UI.List = class L extends Phink.Web.UI.Plugin {
         let css = '';
         result = str_replace('%s', css, elements[0].opening) + "\n";
         let oldValue = [];
-        for (i = 0; i < rowNum; i++) {
+        for (let i = 0; i < rowNum; i++) {
             let row = (values[i] !== null) ? values[i] : Array.apply(null, Array(colNum)).map(String.prototype.valueOf, '&nbsp;');
             result += str_replace('%s', '', elements[1].opening) + "\n";
-            for (j = 0; j < colNum; j++) {
+            for (let j = 0; j < colNum; j++) {
                 let k = i * colNum + j;
                 html = Phink.Web.UI.Plugin.applyTemplate(templates, row, j);
                 if (templates[j]['enabled'] == 1 && row[j] != oldValue[j]) {

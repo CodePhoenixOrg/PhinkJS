@@ -1,42 +1,51 @@
-if( ( /android/gi ).test( navigator.appVersion ) ) {
-  console = {
-    "_log" : [],
-    "log" : function() {
+var Phink = Phink || {};
+
+Phink.Console = (function () {
+  class C {
+    constructor() {
+      this._log = [];
+    }
+    log() {
       var arr = [];
-      for ( var i = 0; i < arguments.length; i++ ) {
-        arr.push( arguments[ i ] );
+      for (var i = 0; i < arguments.length; i++) {
+        arr.push(arguments[i]);
       }
-      this._log.push( arr.join( ", ") );
-    },
-    "trace" : function() {
+      this._log.push(arr.join(", "));
+    }
+    trace() {
       var stack;
       try {
         throw new Error();
-      } catch( ex ) {
+      }
+      catch (ex) {
         stack = ex.stack;
       }
-      console.log( "console.trace()\n" + stack.split( "\n" ).slice( 2 ).join( "  \n" ) );
-    },
-    "dir" : function( obj ) {
-      console.log( "Content of " + obj );
-      for ( var key in obj ) {
-        var value = typeof obj[ key ] === "function" ? "function" : obj[ key ];
-        console.log( " -\"" + key + "\" -> \"" + value + "\"" );
+      this.log("console.trace()\n" + stack.split("\n").slice(2).join("  \n"));
+    }
+    dir(obj) {
+      this.log("Content of " + obj);
+      for (var key in obj) {
+        var value = typeof obj[key] === "function" ? "function" : obj[key];
+        this.log(" -\"" + key + "\" -> \"" + value + "\"");
       }
-    },
-    "show" : function() {
-      alert( this._log.join( "\n" ) );
+    }
+    show() {
+      alert(this._log.join("\n"));
       this._log = [];
     }
-  };
- 
-  window.onerror = function( msg, url, line ) {
-    console.log("ERROR: \"" + msg + "\" at \"" + "\", line " + line);
   }
- 
-  window.addEventListener( "touchstart", function( e ) {
-    if( e.touches.length === 3 ) {
-      console.show();
+
+  return new C();
+})();
+
+window.onerror = function (msg, url, line) {
+  Phink.Console.log("ERROR: \"" + msg + "\" at \"" + "\", line " + line);
+}
+
+if ((/android/gi).test(navigator.appVersion)) {
+  window.addEventListener("touchstart", function (e) {
+    if (e.touches.length === 3) {
+      Phink.Console.show();
     }
-  } );
+  });
 }
