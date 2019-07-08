@@ -1,6 +1,7 @@
 'use strict';
+let PhinkJS = global.PhinkJS || {};
 
-class PhinkJSObject {
+PhinkJS.Object = class F {
     constructor(parent) {
         this._id = '';
         this._name = '';
@@ -34,4 +35,4 @@ class PhinkJSObject {
 }
 
 
-module.exports = PhinkJSObject;
+module.exports = PhinkJS.Object;

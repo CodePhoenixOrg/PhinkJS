@@ -1,12 +1,18 @@
 'use strict';
-let PhinkJSWebObject = require('./web_object.js');
-let PhinkJSWebRouter = require('./web_router.js');
-let PhinkJSRestRouter = require('../rest/rest_router.js');
-let PhinkJSBaseRouter = require('../core/base_router.js');
+let PhinkJS = global.PhinkJS || {};
 
-let bootstrap = require('../bootstrap');
+PhinkJS.BaseRouter = require('../core/base_router.js');
 
-class PhinkJSWebApplication extends PhinkJSWebObject {
+PhinkJS.Web = PhinkJS.Web || {};
+PhinkJS.Web.Object = require('./web_object.js');
+PhinkJS.Web.Router = require('./web_router.js');
+
+PhinkJS.Rest = PhinkJS.Rest || {};
+PhinkJS.Rest.Router = require('../rest/rest_router.js');
+
+require('../bootstrap');
+
+PhinkJS.Web.Application = class F extends PhinkJS.Web.Object {
     constructor() {
         super(this);
 
@@ -23,7 +29,7 @@ class PhinkJSWebApplication extends PhinkJSWebObject {
         let port = baseurl.port;
 
         //baseurl.protocol == 'https' && 
-        if(options !== null && options.key !== undefined && options.cert !== undefined) {
+        if(options !== undefined && options.key !== undefined && options.cert !== undefined) {
             const fs = require("fs");
 
             if(fs.existsSync(global.APP_CERT + options.key) 
@@ -33,12 +39,12 @@ class PhinkJSWebApplication extends PhinkJSWebObject {
             }
             console.log('Is secure');
             require('https').createServer(options, function(req, res) {
-                PhinkJSWebApplication.engine(req, res, callback);
+                F.engine(req, res, callback);
             }).listen(port);
 
         } else {
             require('http').createServer(function(req, res) {
-                PhinkJSWebApplication.engine(req, res, callback);
+                F.engine(req, res, callback);
             }).listen(port);
 
         }
@@ -61,13 +67,13 @@ class PhinkJSWebApplication extends PhinkJSWebObject {
                 console.error(err);
             })
 
-            let router = new PhinkJSBaseRouter(this, req, res);
+            let router = new PhinkJS.BaseRouter(this, req, res);
             router.match();
 
             if (router.requestType === 'rest') {
-                router = new PhinkJSRestRouter(router);
+                router = new PhinkJS.Rest.Router(router);
             } else {
-                router = new PhinkJSWebRouter(router);
+                router = new PhinkJS.Web.Router(router);
             }
 
             if(body !== '') {
@@ -76,14 +82,14 @@ class PhinkJSWebApplication extends PhinkJSWebObject {
             
             router.translate(function (exists) {
                 if (exists) {
-                    router.dispatch(function (rreq, rres, stream) {
-                        self._headers = rreq.headers;
+                    router.dispatch(function (req, res, stream) {
+                        self._headers = req.headers;
                         if (typeof callback === 'function') {
-                            callback(rreq, rres, stream);
+                            callback(req, res, stream);
                         }
 
-                        rres.write(stream);
-                        rreq.emit('finish');
+                        res.write(stream);
+                        req.emit('finish');
                     });
                 } else {
                     res.writeHead(404, {
@@ -105,4 +111,4 @@ class PhinkJSWebApplication extends PhinkJSWebObject {
     }
 }
 
-module.exports = PhinkJSWebApplication;
+module.exports = PhinkJS.Web.Application;
