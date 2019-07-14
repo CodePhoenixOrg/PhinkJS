@@ -4,21 +4,22 @@ Phink.MVC = Phink.MVC || {}
 
 Phink.MVC.View = class V extends Phink.Web.Object {
     constructor(application, name) {
-        super();
-        this.id = 'view' + Date.now();
-        this.domain = (application !== undefined) ? application.getDomain() : '';
-        this.token = '';
-        this.name = name;
-        this.parent = application;
-        Phink.Registry.item(this.domain).view = this;
+        super(application.domain, application.isSecured);
+        this._id = 'view' + Date.now();
+        this._domain = (application !== undefined) ? application.domain : '';
+        this._isSecured = (application !== undefined) ? application.isSecured : '';
+        this._token = '';
+        this._name = name;
+        this._parent = application;
+        Phink.Registry.item(this._domain).view = this;
     }
     requestSimpleView(view, callback) {
         this.requestView(view, 'getViewHtml', null, callback);
     }
     requestView(view, action, args, callback) {
         var the = this;
-        var token = Phink.Registry.getToken();
-        var urls = this.getPath(view, this.domain);
+        var token = Phink.Registry.token;
+        var urls = this.fullyQualifiedURL(view, this._domain);
         var postData = { "action": action, "token": token };
         if (args != null) {
             for (var key in args) {
@@ -42,8 +43,8 @@ Phink.MVC.View = class V extends Phink.Web.Object {
                     var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : [];
                     //            var url = Phink.Web.Object.parseUrl(pageName);
                     //            Phink.Registry.item(the.name).origin = xhr.getResponseHeader('origin');
-                    Phink.Registry.setOrigin(xhr.getResponseHeader('origin'));
-                    Phink.Registry.setToken(data.token);
+                    Phink.Registry.origin = xhr.getResponseHeader('origin');
+                    Phink.Registry.token = data.token;
                     if (data.scripts !== undefined) {
                         var l = data.scripts.length;
                         for (var i = 0; i < l; i++) {
@@ -67,8 +68,8 @@ Phink.MVC.View = class V extends Phink.Web.Object {
     }
     requestPart(pageName, action, attach, postData, callback) {
         var the = this;
-        var token = Phink.Registry.getToken();
-        var urls = this.getPath(pageName, this.domain);
+        var token = Phink.Registry.token;
+        var urls = this.fullyQualifiedURL(pageName, this._domain);
         postData = postData || {};
         postData.action = action;
         postData.token = token;
@@ -91,8 +92,8 @@ Phink.MVC.View = class V extends Phink.Web.Object {
                     data.status = xhr.status;
                     if (xhr.status === 200) {
                         var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : [];
-                        Phink.Registry.setToken(data.token);
-                        Phink.Registry.setOrigin(xhr.getResponseHeader('origin'));
+                        Phink.Registry.token = data.token;
+                        Phink.Registry.origin = xhr.getResponseHeader('origin');
                         if (data.scripts !== undefined) {
                             var l = data.scripts.length;
                             for (var i = 0; i < l; i++) {
@@ -148,10 +149,10 @@ Phink.MVC.View = class V extends Phink.Web.Object {
     }
     attachView(pageName, anchor) {
         var the = this;
-        var myToken = Phink.Registry.getToken();
+        var myToken = Phink.Registry.token;
         this.getJSON(pageName, { "action": 'getViewHtml', "token": myToken }, function (data) {
             try {
-                Phink.Registry.setToken(data.token);
+                Phink.Registry.token = data.token;
                 if (data.scripts !== undefined) {
                     var l = data.scripts.length;
                     for (var i = 0; i < l; i++) {

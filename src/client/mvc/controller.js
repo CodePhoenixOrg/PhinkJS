@@ -4,18 +4,19 @@ Phink.MVC = Phink.MVC || {}
 Phink.MVC.Controller = class C extends Phink.Web.Object {
     constructor(view, name) {
         super(view);
-        this.domain = (view !== undefined) ? view.getDomain() : '';
-        this.hasView = true;
+        this._domain = (view !== undefined) ? view.domain : '';
+        this._isSecured = (view !== undefined) ? view.isSecured : '';
+        this._hasView = true;
         if (view instanceof Phink.MVC.View) {
-            this.parent = view;
+            this._parent = view;
         }
         else if (typeof view === 'Object') {
             throw new Error('Not a valid view');
         }
         else {
-            this.hasView = false;
+            this._hasView = false;
         }
-        this.name = name;
+        this._name = name;
     }
     oninit(callback) {
         if (typeof callback === 'function') {
@@ -49,28 +50,28 @@ Phink.MVC.Controller = class C extends Phink.Web.Object {
     }
     route(route, callback) {
         var routeMatcher = new RegExp(route.replace(/:[^\s/]+/g, '([\\w-]+)'));
-        this.parent.requestView(view, action, args, callback);
+        this._parent.requestView(view, action, args, callback);
     }
     getSimpleView(view, callback) {
-        this.parent.requestSimpleView(view, callback);
+        this._parent.requestSimpleView(view, callback);
     }
     getView(view, action, args, callback) {
-        this.parent.requestView(view, action, args, callback);
+        this._parent.requestView(view, action, args, callback);
     }
     getPartialView(pageName, action, attach, postData, callback) {
-        this.parent.requestPart(pageName, action, attach, postData, callback);
+        this._parent.requestPart(pageName, action, attach, postData, callback);
     }
     parseViewResponse(pageName, callback) {
-        this.parent.parseResponse(pageName, callback);
+        this._parent.parseResponse(pageName, callback);
     }
     attachWindow(pageName, anchor) {
-        this.parent.attachWindow(pageName, anchor);
+        this._parent.attachWindow(pageName, anchor);
     }
     attachView(pageName, anchor) {
-        this.parent.attachView(pageName, anchor);
+        this._parent.attachView(pageName, anchor);
     }
     attachIframe(id, src, anchor) {
-        this.parent.attachIframe(id, src, anchor);
+        this._parent.attachIframe(id, src, anchor);
     }
     static create(parent, name) {
         if (name === undefined) {
