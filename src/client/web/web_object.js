@@ -3,43 +3,54 @@ var Phink = Phink || {}
 Phink.Web = Phink.Web || {}
 
 Phink.Web.Object = class W extends Phink.Object {
-    constructor(domain, isSSL) {
+    constructor(domain, isSecured) {
         super();
         this.parent = this;
-        this.isSSL = isSSL;
-        this.origin = '';
-        this.url = {};
-        this.token = '';
-        this.domain = domain;
+        if(isSecured === undefined) {
+            this._isSecured = (window.location.protocol === 'https:');
+        } else {
+            this._isSecured = isSecured;
+        }
+        if(domain === undefined) {
+            this._domain = window.location.hostname;
+        } else {
+            this._domain = domain;
+        }
+        this._origin = window.location.origin;
+        this._url = {};
+        this._token = '';
     }
-    getDomain() {
-        return this.domain;
+    get isSecured() {
+        return this._isSecured;
     }
-    setOrigin(value) {
-        this.origin = value;
-        return this;
+
+    get domain() {
+        return this._domain;
     }
-    getOrigin() {
-        return this.origin;
+    set origin(value) {
+        this._origin = value;
     }
-    setToken(value) {
-        this.token = value;
-        return this;
+
+    get origin() {
+        return this._origin;
     }
-    getToken() {
-        return this.token;
+    set token(value) {
+        this._token = value;
     }
-    getPath(url, domain) {
-        this.url = new Phink.Url(url, domain, this.isSSL);
-        return this.url.toString();
+    get token() {
+        return this._token;
     }
-    getUrl() {
-        return this.url;
+    fullyQualifiedURL(url, domain) {
+        this._url = new Phink.Url(url, domain, this._isSecured);
+        return this._url.toString();
+    }
+    get url() {
+        return this._url;
     }
     getJSON(url, postData, callback) {
-        postData.token = Phink.Registry.getToken();
-        this.origin = Phink.Registry.getOrigin();
-        var urls = this.getPath(url, this.domain);
+        postData.token = Phink.Registry.token;
+        this._origin = Phink.Registry.origin;
+        var urls = this.fullyQualifiedURL(url, this._domain);
         var xhr = new XMLHttpRequest();
         var params = '';
         for (var key in postData) {
@@ -60,8 +71,8 @@ Phink.Web.Object = class W extends Phink.Object {
                             debugLog('Error : ' + data.error);
                         }
                         else {
-                            Phink.Registry.setToken(data.token);
-                            Phink.Registry.setOrigin(xhr.getResponseHeader('origin'));
+                            Phink.Registry.token = data.token;
+                            Phink.Registry.origin = xhr.getResponseHeader('origin');
                             callback.call(this, data, xhr.statusText, xhr);
                         }
                     }
@@ -74,9 +85,9 @@ Phink.Web.Object = class W extends Phink.Object {
         xhr.send(params);
     }
     getJSONP(url, postData, callBack) {
-        postData.token = Phink.Registry.getToken();
-        this.origin = Phink.Registry.getOrigin();
-        var urls = this.getPath(url, this.domain);
+        postData.token = Phink.Registry.token;
+        this.origin = Phink.Registry.origin;
+        var urls = this.fullyQualifiedURL(url, this.domain);
         $.ajax({
             type: 'POST',
             url: urls + "&callback=?",
@@ -85,8 +96,8 @@ Phink.Web.Object = class W extends Phink.Object {
             async: true
         }).done(function (data, textStatus, xhr) {
             try {
-                Phink.Registry.setToken(data.token);
-                Phink.Registry.setOrigin(xhr.getResponseHeader('origin'));
+                Phink.Registry.token = data.token;
+                Phink.Registry.origin =xhr.getResponseHeader('origin');
                 if ($.isFunction(callBack)) {
                     callBack.call(this, data, textStatus, xhr);
                 }
@@ -101,7 +112,7 @@ Phink.Web.Object = class W extends Phink.Object {
         });
     }
     getScript(url, callback) {
-        var urls = this.getPath(url, this.domain);
+        var urls = this.fullyQualifiedURL(url, this.domain);
         $.getScript(urls)
             .done(function (script, textStatus) {
                 if (typeof callback === 'function') {

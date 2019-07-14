@@ -3,14 +3,16 @@ var Phink = Phink || {}
 Phink.Web = Phink.Web || {}
 
 Phink.Web.Application = class Z extends Phink.Web.Object {
-    constructor(domain, name, isSSL) {
-        super();
-        this.id = 'app' + Date.now();
+    constructor(domain, name, isSecured) {
+        super(domain, isSecured);
+        this._id = 'app' + Date.now();
         if (name === undefined) {
-            name = this.id;
+            name = this._id;
         }
-        this.name = name;
-        this.domain = domain;
+
+        
+        this._name = name;
+        this._domain = domain;
         this.viewCollection = [];
         this.controllerCollection = [];
     }

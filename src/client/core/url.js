@@ -2,93 +2,93 @@ var Phink = Phink || {}
 
 Phink.Url = class U {
     constructor(url, domain, isSSL) {
-        this.url = url;
-        this.isParsed = false;
-        this.isSSL = isSSL;
-        this.tmpDomain = domain;
-        this.port = '80';
-        this.page = window.location.pathname;
-        this.domain = this.url;
-        this.isRelative = false;
+        this._url = url;
+        this._isParsed = false;
+        this._isSSL = isSSL;
+        this._tmpDomain = domain;
+        this._port = '80';
+        this._page = window.location.pathname;
+        this._domain = this._url;
+        this._isRelative = false;
         this.parse();
     }
     parse() {
         var result = [];
-        this.protocol = '';
-        if (this.tmpDomain !== undefined) {
-            this.protocol = (this.tmpDomain.search('://') > -1) ? this.tmpDomain.substring(0, this.tmpDomain.search('://') + 1) : '';
+        this._protocol = '';
+        if (this._tmpDomain !== undefined) {
+            this._protocol = (this._tmpDomain.search('://') > -1) ? this._tmpDomain.substring(0, this._tmpDomain.search('://') + 1) : '';
         }
         else {
-            this.protocol = (this.url.search('://') > -1) ? this.url.substring(0, this.url.search('://') + 1) : '';
+            this._protocol = (this._url.search('://') > -1) ? this._url.substring(0, this._url.search('://') + 1) : '';
         }
-        if (this.protocol === '' && this.tmpDomain === undefined) {
-            this.page = this.url;
-            this.isRelative = true;
-            this.protocol = window.location.protocol;
-            this.domain = window.location.hostname;
-            this.port = window.location.port;
-            //this.url = window.location.href.substring(0, window.location.href.search('/'));
+        if (this._protocol === '' && this._tmpDomain === undefined) {
+            this._page = this._url;
+            this._isRelative = true;
+            this._protocol = window.location.protocol;
+            this._domain = window.location.hostname;
+            this._port = window.location.port;
+            //this._url = window.location.href.substring(0, window.location.href.search('/'));
         }
         else {
-            if (this.protocol === '' && this.tmpDomain !== undefined) {
-                this.domain = this.tmpDomain;
-                this.protocol = (this.isSSL) ? 'https:' : 'http:';
+            if (this._protocol === '' && this._tmpDomain !== undefined) {
+                this._domain = this._tmpDomain;
+                this._protocol = (this._isSSL) ? 'https:' : 'http:';
             }
             else {
-                if (this.protocol === '') {
-                    this.protocol = (this.isSSL) ? 'https:' : 'http:';
+                if (this._protocol === '') {
+                    this._protocol = (this._isSSL) ? 'https:' : 'http:';
                     //throw new Error('Invalid absolute url. Protocol is missing');
                 }
-                this.url = this.url.replace(this.protocol + '//', '');
-                var domainLimit = this.url.search('/');
+                this._url = this._url.replace(this._protocol + '//', '');
+                var domainLimit = this._url.search('/');
                 if (domainLimit > 0) {
-                    this.domain = this.url.substring(0, domainLimit);
-                    this.url = this.url.replace(this.domain, '');
+                    this._domain = this._url.substring(0, domainLimit);
+                    this._url = this._url.replace(this._domain, '');
                 }
-                else if (this.tmpDomain !== undefined) {
-                    this.domain = this.tmpDomain;
+                else if (this._tmpDomain !== undefined) {
+                    this._domain = this._tmpDomain;
                 }
                 else {
-                    this.domain = this.url;
-                    this.url = '/';
+                    this._domain = this._url;
+                    this._url = '/';
                 }
-                if (this.domain.search(':') > -1) {
-                    this.port = this.domain.substring(this.domain.search(':'));
-                    this.url = this.url.replace(':' + this.port, '');
+                if (this._domain.search(':') > -1) {
+                    this._port = this._domain.substring(this._domain.search(':'));
+                    this._url = this._url.replace(':' + this._port, '');
                 }
-                if (this.domain.search('localhost') > -1) {
-                    this.domain = 'localhost';
-                    this.url = this.url.replace(this.domain, '');
+                if (this._domain.search('localhost') > -1) {
+                    this._domain = 'localhost';
+                    this._url = this._url.replace(this._domain, '');
                 }
             }
-            this.page = this.url;
-            if (this.page.substring(0, 1) === '/') {
-                this.page = this.page.substring(1);
+            this._page = this._url;
+            if (this._page.substring(0, 1) === '/') {
+                this._page = this._page.substring(1);
             }
-            this.port = (this.port === '') ? '80' : this.port;
-            this.protocol = ((this.domain !== '' && this.protocol === '') ? ((this.isSSL) ? 'https:' : 'http:') : this.protocol);
+            this._port = (this._port === '') ? '80' : this._port;
+            this._protocol = ((this._domain !== '' && this._protocol === '') ? ((this._isSSL) ? 'https:' : 'http:') : this._protocol);
         }
         var queryString = '';
-        if (this.page.search(/\?/) > -1) {
-            queryString = this.page.substring(this.page.search(/\?/));
+        if (this._page.search(/\?/) > -1) {
+            queryString = this._page.substring(this._page.search(/\?/));
         }
-        this.queryString = queryString;
-        result.isRelative = this.isRelative;
-        result.protocol = this.protocol;
-        result.domain = this.domain;
-        result.port = this.port;
-        result.page = this.page;
-        result.queryString = this.queryString;
-        this.url = result;
-        this.isParsed = true;
+        this._queryString = queryString;
+        result.isRelative = this._isRelative;
+        result.protocol = this._protocol;
+        result.domain = this._domain;
+        result.port = this._port;
+        result.page = this._page;
+        result.queryString = this._queryString;
+        this._url = result;
+        this._isParsed = true;
         return result;
     }
     toString() {
-        if (!this.isParsed) {
+        if (!this._isParsed) {
             this.parse();
         }
-        var fqPage = (this.queryString !== '') ? this.page + this.queryString : this.page;
-        return this.protocol + '//' + this.domain + '/' + fqPage;
+        var fqPage = (this._queryString !== '') ? this._page + this._queryString : this._page;
+        return this._protocol + '//' + this._domain + '/' + fqPage;
     }
 }
 

@@ -4,18 +4,18 @@ Phink.Registry = (function () {
     
     class R {
         constructor() {
-            this.registry = {};
+            this._registry = {};
         }
         write(item, key, value) {
-            if (this.registry[item] === undefined) {
-                this.registry[item] = {};
+            if (this._registry[item] === undefined) {
+                this._registry[item] = {};
             }
-            this.registry[item][key] = value;
+            this._registry[item][key] = value;
         }
         read(item, key, defaultValue) {
             var result = null;
-            if (this.registry[item] !== undefined) {
-                result = (this.registry[item][key] !== undefined) ? this.registry[item][key] : ((defaultValue !== undefined) ? defaultValue : null);
+            if (this._registry[item] !== undefined) {
+                result = (this._registry[item][key] !== undefined) ? this._registry[item][key] : ((defaultValue !== undefined) ? defaultValue : null);
             }
             return result;
         }
@@ -28,33 +28,33 @@ Phink.Registry = (function () {
                 return null;
             }
 
-            if (this.registry[item] !== undefined && this.registry[item] !== null) {
-                return this.registry[item];
+            if (this._registry[item] !== undefined && this._registry[item] !== null) {
+                return this._registry[item];
             }
             else {
-                this.registry[item] = {};
-                return this.registry[item];
+                this._registry[item] = {};
+                return this._registry[item];
             }
         }
         items() {
-            return this.registry;
+            return this._registry;
         }
         clear() {
-            this.registry = {};
+            this._registry = {};
         }
-        setToken(value) {
-            this.registry['token'] = value;
+        set token(value) {
+            this._registry['token'] = value;
             return this;
         }
-        getToken() {
-            return this.registry['token'];
+        get token() {
+            return this._registry['token'];
         }
-        setOrigin(value) {
-            this.registry['origin'] = value;
+        set origin(value) {
+            this._registry['origin'] = value;
             return this;
         }
-        getOrigin() {
-            return this.registry['origin'];
+        get origin() {
+            return this._registry['origin'];
         }
     }
 
