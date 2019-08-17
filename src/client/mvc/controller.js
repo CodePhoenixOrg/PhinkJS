@@ -3,9 +3,9 @@ var Phink = Phink || {}
 Phink.MVC = Phink.MVC || {}
 Phink.MVC.Controller = class C extends Phink.Web.Object {
     constructor(view, name) {
-        super(view);
+        super();
         this._domain = (view !== undefined) ? view.domain : '';
-        this._isSecured = (view !== undefined) ? view.isSecured : '';
+        this._isSecured = (view !== undefined) ? view.isSecured : false;
         this._hasView = true;
         if (view instanceof Phink.MVC.View) {
             this._parent = view;

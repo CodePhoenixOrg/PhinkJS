@@ -22,62 +22,6 @@ var main = (mainNode.length > 0 && mainNode[0].dataset.init !== undefined) ? mai
 
 Phink.DOM.ready(function () {
 
-    var loadDepends = function (scripts, callback) {
-
-        if (scripts.length > 0) {
-            for (var i = 0; i < scripts.length; i++) {
-                Phink.include(scripts[i], function (e) {
-                    if (i === scripts.length) {
-                        if (typeof callback === 'function') {
-                            callback.call(null);
-                        }
-
-                    }
-                });
-            }
-
-        } else {
-            if (typeof callback === 'function') {
-                callback.call(this);
-            }
-        }
-
-    }
-
-    var dependsOn = function (scripts, callback) {
-
-        var dependsOn = function (src) {
-            var xmlhttp, next;
-            if (window.XMLHttpRequest) {
-                xmlhttp = new XMLHttpRequest();
-            } else {
-                try {
-                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                } catch (e) {
-                    return;
-                }
-            }
-            xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    eval(xmlhttp.responseText);
-                    next = scripts.shift();
-                    if (next) {
-                        dependsOn(next);
-                    } else if (typeof callback == 'function') {
-                        callback();
-                    }
-                }
-            }
-            xmlhttp.open("GET", src, true);
-            xmlhttp.send();
-        };
-        if (scripts.length > 0) {
-            dependsOn(scripts.shift());
-        } else if (typeof callback == 'function') {
-            callback();
-        }
-    }
-    
     var loadDeps = function (scripts, callback) {
 
         var F = function (src) {

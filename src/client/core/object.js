@@ -15,9 +15,6 @@ Phink.Object = class O {
         return this._name;
     }
 
-    set parent(value) {
-        this._parent = value;
-    }
     get parent() {
         return this._parent;
     }

@@ -5,7 +5,7 @@ Phink.Web = Phink.Web || {}
 Phink.Web.Object = class W extends Phink.Object {
     constructor(domain, isSecured) {
         super();
-        this.parent = this;
+        this._parent = this;
         if(isSecured === undefined) {
             this._isSecured = (window.location.protocol === 'https:');
         } else {
