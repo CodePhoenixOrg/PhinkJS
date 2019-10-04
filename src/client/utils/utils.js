@@ -47,7 +47,7 @@ Phink.Utils = class T {
         ui.style.height = ui.contentWindow.document.body.scrollHeight + 'px';
     }
     static html64(container, html) {
-        $(container).html(T.base64Decode(html));
+        document.querySelector(container).innerHTML = T.base64Decode(html);
     }
     static secondsToString(seconds) {
         var minutes = Math.floor(seconds / 60);
@@ -196,8 +196,6 @@ Phink.Utils = class T {
         });
         return formData;
     }
+
 }
 
-function debugLog(message) {
-    alert(message);
-}

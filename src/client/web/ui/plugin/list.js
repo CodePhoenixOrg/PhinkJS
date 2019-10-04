@@ -32,8 +32,8 @@ Phink.Web.UI.List = class L extends Phink.Web.UI.Plugin {
             result += elements[1].closing + "\n";
         }
         result += elements[0].closing + "\n";
-        $(container).html("&nbsp;");
-        $(container).html(result);
+        document.querySelector(container).innerHTML = "&nbsp;";
+        document.querySelector(container).innerHTML = result;
         if (typeof callback === 'function') {
             callback.call(this);
         }

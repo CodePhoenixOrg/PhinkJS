@@ -31,7 +31,7 @@ Phink.Web.UI.Plugin = class P extends Phink.Web.Object {
                     }
                 }
                 if (template.enabled) {
-                    $(tableId + 'td' + (i + colNum * j).toString()).html(html);
+                    document.querySelector(tableId + 'td' + (i + colNum * j).toString()).innerHTML = html;
                 }
             }
         }

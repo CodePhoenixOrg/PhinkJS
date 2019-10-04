@@ -3,18 +3,14 @@ var Phink = Phink || {}
 Phink.Web = Phink.Web || {}
 
 Phink.Web.Object = class W extends Phink.Object {
-    constructor(domain, isSecured) {
+    constructor(parent) {
         super();
-        this._parent = this;
-        if(isSecured === undefined) {
+        if (parent !== undefined) {
+            this._isSecured = parent.isSecured;
+            this._domain = parent.domain;
+        } else {
             this._isSecured = (window.location.protocol === 'https:');
-        } else {
-            this._isSecured = isSecured;
-        }
-        if(domain === undefined) {
             this._domain = window.location.hostname;
-        } else {
-            this._domain = domain;
         }
         this._origin = window.location.origin;
         this._url = {};
@@ -65,10 +61,10 @@ Phink.Web.Object = class W extends Phink.Object {
         xhr.onload = function () {
             if (typeof callback === 'function') {
                 if (xhr.status === 200 || xhr.status === 202) {
-                    var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : [];
+                    var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : {};
                     try {
                         if (data.error !== undefined) {
-                            debugLog('Error : ' + data.error);
+                            errorLog('Error : ' + data.error);
                         }
                         else {
                             Phink.Registry.token = data.token;
@@ -77,53 +73,33 @@ Phink.Web.Object = class W extends Phink.Object {
                         }
                     }
                     catch (e) {
-                        debugLog(e);
+                        errorLog(e);
                     }
                 }
             }
         };
         xhr.send(params);
     }
-    getJSONP(url, postData, callBack) {
+    getJSONP(url, postData, callback) {
         postData.token = Phink.Registry.token;
         this.origin = Phink.Registry.origin;
         var urls = this.fullyQualifiedURL(url, this.domain);
-        $.ajax({
-            type: 'POST',
-            url: urls + "&callback=?",
-            data: postData,
-            dataType: 'json',
-            async: true
-        }).done(function (data, textStatus, xhr) {
+        Phink.ajax(urls + "&callback=?", postData, function (data, textStatus, xhr) {
             try {
                 Phink.Registry.token = data.token;
-                Phink.Registry.origin =xhr.getResponseHeader('origin');
-                if ($.isFunction(callBack)) {
-                    callBack.call(this, data, textStatus, xhr);
+                Phink.Registry.origin = xhr.getResponseHeader('origin');
+                if (typeof callback == 'function') {
+                    callback.call(this, data, textStatus, xhr);
                 }
             }
             catch (e) {
-                debugLog(e);
+                errorLog(e);
             }
-        }).fail(function (xhr, options, message) {
-            debugLog("Satus : " + xhr.status + "\r\n" +
-                "Options : " + options + "\r\n" +
-                "Message : " + message);
         });
     }
     getScript(url, callback) {
         var urls = this.fullyQualifiedURL(url, this.domain);
-        $.getScript(urls)
-            .done(function (script, textStatus) {
-                if (typeof callback === 'function') {
-                    callback.call(this, script, textStatus);
-                }
-            })
-            .fail(function (jqxhr, settings, exception) {
-                debugLog("Satus : " + jqxhr.status + "\r\n" +
-                    "Options : " + settings + "\r\n" +
-                    "Message : " + exception);
-            });
+        Phink.include(urls, callback);
     }
     static getCSS(attributes) {
         // setting default attributes
@@ -140,7 +116,6 @@ Phink.Web.Object = class W extends Phink.Object {
             attributes.rel = "stylesheet";
         }
         // appending the stylesheet
-        // no jQuery stuff here, just plain dom manipulations
         var styleSheet = document.createElement("link");
         for (var key in attributes) {
             styleSheet.setAttribute(key, attributes[key]);
@@ -149,13 +124,3 @@ Phink.Web.Object = class W extends Phink.Object {
         head.appendChild(styleSheet);
     }
 }
-
-
-
-
-
-
-
-
-
-
