@@ -91,5 +91,3 @@ Phink.Url = class U {
         return this._protocol + '//' + this._domain + '/' + fqPage;
     }
 }
-
-
