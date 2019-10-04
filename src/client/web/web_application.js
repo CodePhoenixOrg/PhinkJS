@@ -4,15 +4,13 @@ Phink.Web = Phink.Web || {}
 
 Phink.Web.Application = class Z extends Phink.Web.Object {
     constructor(domain, name, isSecured) {
-        super(domain, isSecured);
+        super();
         this._id = 'app' + Date.now();
         if (name === undefined) {
             name = this._id;
         }
 
-        
         this._name = name;
-        this._domain = domain;
         this.viewCollection = [];
         this.controllerCollection = [];
     }
@@ -34,17 +32,22 @@ Phink.Web.Application = class Z extends Phink.Web.Object {
         return newCtrl;
     }
     getViewByName(viewName) {
-        var result = null;
+        var view = null;
         for (var name in this.viewCollection) {
-            if (name === viewName && this.viewCollection[name] !== undefined) {
-                result = this.viewCollection[name];
+            if (name === viewName && this.viewCollection[name] !== null) {
+                view = this.viewCollection[name];
                 break;
             }
         }
-        return result;
+
+        if (!(view instanceof Phink.MVC.View)) {
+            throw new Error('A view with the name ' + viewName + ' does not exist');
+        }
+
+        return view;
     }
     addView(view) {
-        if (view === undefined)
+        if (view === null)
             return null;
         if (!(view instanceof Phink.MVC.View)) {
             throw new Error('This is not a view');
@@ -67,12 +70,3 @@ Phink.Web.Application = class Z extends Phink.Web.Object {
         return new Phink.Web.Application(domain, name, isSSL);
     }
 }
-
-
-
-
-
-
-
-
-
