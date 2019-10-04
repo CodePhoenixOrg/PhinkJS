@@ -1,6 +1,6 @@
 var Phink = Phink || {}
 
-Phink.Rest = (function() {
+Phink.Rest = (function () {
     class S {
         constructor() {
         }
@@ -17,7 +17,7 @@ Phink.Rest = (function() {
             xhr.onload = function () {
                 if (typeof callback === 'function') {
                     if (xhr.status === 200) {
-                        var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : [];
+                        var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : {};
                         callback.call(this, data);
                     }
                     else {
@@ -40,7 +40,7 @@ Phink.Rest = (function() {
             xhr.onload = function () {
                 if (typeof callback === 'function') {
                     if (xhr.status === 200) {
-                        var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : [];
+                        var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : {};
                         callback.call(this, data);
                     }
                     else {
@@ -72,7 +72,7 @@ Phink.Rest = (function() {
             xhr.onload = function () {
                 if (typeof callback === 'function') {
                     if (xhr.status === 200) {
-                        var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : [];
+                        var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : {};
                         callback.call(this, data);
                     }
                     else {
@@ -83,13 +83,13 @@ Phink.Rest = (function() {
             xhr.send(params);
         }
         /**
-             * Performs a PATCH request and return the result to a callback function
-             *
-             * @param {string} url
-             * @param {array} data
-             * @param {function} callback
-             * @returns JSON stream on callback
-             */
+         * Performs a PATCH request and return the result to a callback function
+         *
+         * @param {string} url
+         * @param {array} data
+         * @param {function} callback
+         * @returns JSON stream on callback
+         */
         patch(url, data, callback) {
             var xhr = new XMLHttpRequest();
             var params = '';
@@ -104,7 +104,7 @@ Phink.Rest = (function() {
             xhr.onload = function () {
                 if (typeof callback === 'function') {
                     if (xhr.status === 200) {
-                        var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : [];
+                        var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : {};
                         callback.call(this, data);
                     }
                     else {
@@ -115,13 +115,13 @@ Phink.Rest = (function() {
             xhr.send(params);
         }
         /**
-             * Performs a PUT request and return the result to a callback function
-             *
-             * @param {string} url
-             * @param {array} data
-             * @param {function} callback
-             * @returns JSON stream on callback
-             */
+         * Performs a PUT request and return the result to a callback function
+         *
+         * @param {string} url
+         * @param {array} data
+         * @param {function} callback
+         * @returns JSON stream on callback
+         */
         put(url, data, callback) {
             var xhr = new XMLHttpRequest();
             xhr.open('PUT', url);
@@ -129,7 +129,7 @@ Phink.Rest = (function() {
             xhr.onload = function () {
                 if (typeof callback === 'function') {
                     if (xhr.status === 200) {
-                        var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : [];
+                        var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : {};
                         callback.call(this, data);
                     }
                     else {
@@ -152,7 +152,7 @@ Phink.Rest = (function() {
             xhr.onload = function () {
                 if (typeof callback === 'function') {
                     if (xhr.status === 200) {
-                        var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : [];
+                        var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : {};
                         callback.call(this, data);
                     }
                     else {
@@ -166,4 +166,3 @@ Phink.Rest = (function() {
 
     return new S()
 })()
-
