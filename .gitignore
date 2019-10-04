@@ -1,5 +1,5 @@
-.vs
+.vs/
+.vscode/
 phink.js
-HelloWorld/node_modules
+node_modules
 HelloWorld/app/data/configuration.js
-HelloWorld/vendor/phink/phink.js
