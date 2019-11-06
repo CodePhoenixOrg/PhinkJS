@@ -17,7 +17,7 @@ Phink.Web.UI.Table = class Q extends Phink.Web.UI.Plugin {
                 let template = templates[i];
                 let html = Phink.Web.UI.Plugin.applyTemplate(templates, row, i);
                 if (template.enabled) {
-                    $(tableId + 'td' + (i + colNum * j).toString()).html(html);
+                    document.querySelector(tableId + 'td' + (i + colNum * j).toString()).innerHTML = html;
                 }
             }
         }

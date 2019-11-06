@@ -79,8 +79,8 @@ Phink.Web.UI.Accordion = class M extends Phink.Web.UI.Plugin {
         result += elements[0].closing;
         result += elements[2].closing;
         result += elements[0].closing;
-        $(container).html("&nbsp;");
-        $(container).html(result);
+        document.querySelector(container).innerHTML = "&nbsp;";
+        document.querySelector(container).innerHTML = result;
         if (typeof callback === 'function') {
             callback.call(this);
         }

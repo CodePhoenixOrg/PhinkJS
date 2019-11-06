@@ -4,14 +4,13 @@ Phink.MVC = Phink.MVC || {}
 
 Phink.MVC.View = class V extends Phink.Web.Object {
     constructor(application, name) {
-        super(application.domain, application.isSecured);
+        super(application);
         this._id = 'view' + Date.now();
         this._domain = (application !== undefined) ? application.domain : '';
         this._isSecured = (application !== undefined) ? application.isSecured : '';
         this._token = '';
         this._name = name;
-        this._parent = application;
-        Phink.Registry.item(this._domain).view = this;
+        // Phink.Registry.item(this._domain).view = this;
     }
     requestSimpleView(view, callback) {
         this.requestView(view, 'getViewHtml', null, callback);
@@ -40,7 +39,7 @@ Phink.MVC.View = class V extends Phink.Web.Object {
         xhr.onload = function () {
             if (typeof callback === 'function') {
                 if (xhr.status === 200) {
-                    var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : [];
+                    var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : {};
                     //            var url = Phink.Web.Object.parseUrl(pageName);
                     //            Phink.Registry.item(the.name).origin = xhr.getResponseHeader('origin');
                     Phink.Registry.origin = xhr.getResponseHeader('origin');
@@ -56,7 +55,7 @@ Phink.MVC.View = class V extends Phink.Web.Object {
                         callback.call(this, data);
                     }
                     else {
-                        $(document.body).html(data.view);
+                        document.querySelector(document.body).innerHTML = data.view;
                     }
                 }
                 else {
@@ -91,7 +90,7 @@ Phink.MVC.View = class V extends Phink.Web.Object {
                     var data = [];
                     data.status = xhr.status;
                     if (xhr.status === 200) {
-                        var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : [];
+                        var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : {};
                         Phink.Registry.token = data.token;
                         Phink.Registry.origin = xhr.getResponseHeader('origin');
                         if (data.scripts !== undefined) {
@@ -101,7 +100,7 @@ Phink.MVC.View = class V extends Phink.Web.Object {
                             }
                         }
                         var html = Phink.Utils.base64Decode(data.view);
-                        $(attach).html(html);
+                        document.querySelector(attach).innerHTML = html;
                         if (typeof callback === 'function') {
                             callback.call(this, data);
                         }
@@ -112,7 +111,7 @@ Phink.MVC.View = class V extends Phink.Web.Object {
                 }
             }
             catch (e) {
-                debugLog(e);
+                errorLog(e);
             }
         };
         xhr.send(params);
@@ -140,10 +139,10 @@ Phink.MVC.View = class V extends Phink.Web.Object {
     attachWindow(pageName, anchor) {
         this.requestSimpleView(pageName, function (data) {
             if (anchor !== undefined) {
-                $(anchor).html(data.view);
+                document.querySelector(anchor).innerHTML = data.view;
             }
             else {
-                $(document.body).html(data.view);
+                document.querySelector(document.body).innerHTML = data.view;
             }
         });
     }
@@ -160,10 +159,10 @@ Phink.MVC.View = class V extends Phink.Web.Object {
                     }
                 }
                 var html = Phink.Utils.base64Decode(data.view);
-                $(anchor).html(html);
+                document.querySelector(anchor).innerHTML = html;
             }
             catch (e) {
-                debugLog(e);
+                errorLog(e);
             }
         });
     }
