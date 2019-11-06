@@ -25,9 +25,9 @@ Phink.Web.UI.Plugin = class P extends Phink.Web.Object {
                         event = e[0] + '="' + e[1] + '"';
                     }
                     for (let m = 0; m < colNum; m++) {
-                        html = html.replace('<% ' + templates[m].name + ' %>', row[m]);
+                        html = html.replace('{{ ' + templates[m].name + ' }}', row[m]);
                         event = event.replace(templates[m].name, row[m]);
-                        html = html.replace('<% &' + templates[m].name + ' %>', event);
+                        html = html.replace('{{ &' + templates[m].name + ' }}', event);
                     }
                 }
                 if (template.enabled) {
@@ -56,10 +56,10 @@ Phink.Web.UI.Plugin = class P extends Phink.Web.Object {
             }
             for (let m = 0; m < templates.length; m++) {
                 //            if(templates[m] === undefined) continue;
-                html = html.replace('<% ' + templates[m].name + ' %>', row[m]);
-                html = html.replace('<% ' + templates[m].name + ':index %>', m);
+                html = html.replace('{{ ' + templates[m].name + ' }}', row[m]);
+                html = html.replace('{{ ' + templates[m].name + ':index }}', m);
                 event = event.replace(templates[m].name, "'" + row[m] + "'");
-                html = html.replace('<% &' + templates[m].name + ' %>', event);
+                html = html.replace('{{ &' + templates[m].name + ' }}', event);
             }
         }
         return html;
@@ -77,10 +77,10 @@ Phink.Web.UI.Plugin = class P extends Phink.Web.Object {
                 event = e[0] + '="' + e[1] + '"';
             }
             for (let m = 0; m < row.length; m++) {
-                html = html.replace('<% ' + templates[m].name + ' %>', row[m]);
-                html = html.replace('<% ' + templates[m].name + ':index %>', m);
+                html = html.replace('{{ ' + templates[m].name + ' }}', row[m]);
+                html = html.replace('{{ ' + templates[m].name + ':index }}', m);
                 event = event.replace(templates[m].name, "'" + row[m] + "'");
-                html = html.replace('<% &' + templates[m].name + ' %>', event);
+                html = html.replace('{{ &' + templates[m].name + ' }}', event);
             }
         }
         return html;

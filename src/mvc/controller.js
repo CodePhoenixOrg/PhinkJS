@@ -32,12 +32,12 @@ PhinkJS.MVC.Controller = class F extends PhinkJS.Web.Object {
         let the = this;
         this._view.getTemplate(function (err, template) {
             // console.log(template);
-            let matches = template.match(/(\<% [a-z]+ %\>)/g);
+            let matches = template.match(/(\{\{ [a-z]+ \}\})/g);
 
             if (matches) {
                 console.log(matches);
                 matches.forEach(function (match) {
-                    let variable = match.replace("%>", '').replace("<%", '').trim();
+                    let variable = match.replace("}}", '').replace("{{", '').trim();
 
                     console.log('match: ' + match);
                     console.log('variable: ' + variable);
