@@ -68,13 +68,13 @@ Phink.Registry = (function () {
             return this._registry['origin'];
         }
         set script(script) {
-            var s = script.replace('/', '_');
+            var s = script.replace(/\//g, '_');
             this.write('scripts', s, script);
         }
         set scripts(scripts) {
             for(var i in scripts) {
                 var value = scripts[i];
-                var s = value.replace('/', '_');
+                var s = value.replace(/\//g, '_');
 
                 this.write('scripts', s, value);
             }
@@ -83,7 +83,7 @@ Phink.Registry = (function () {
             return this.read('scripts');
         }
         scriptExists(script) {
-            var s = script.replace('/', '_');
+            var s = script.replace(/\//g, '_');
             if(this._registry['scripts'] === undefined) {
                 this._registry['scripts'] = [];
             }
