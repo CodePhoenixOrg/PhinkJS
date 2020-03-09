@@ -4,7 +4,7 @@ Phink.Registry = (function () {
     
     class R {
         constructor() {
-            this._registry = {};
+            this._registry = [];
         }
         write(item, key, value) {
             if (this._registry[item] === undefined) {
@@ -42,6 +42,17 @@ Phink.Registry = (function () {
         clear() {
             this._registry = {};
         }
+        exists(item, key, value) {
+            if(item !== undefined && key === undefined && value === undefined) {
+                return this._registry[item] !== undefined;
+            }
+            if(item !== undefined && key !== undefined && value === undefined) {
+                return this._registry[item][key] !== undefined;
+            }
+            if(item !== undefined && key !== undefined && value !== undefined) {
+                return this._registry[item][key][value] !== undefined;
+            }
+        }
         set token(value) {
             this._registry['token'] = value;
             return this;
@@ -55,6 +66,29 @@ Phink.Registry = (function () {
         }
         get origin() {
             return this._registry['origin'];
+        }
+        set script(script) {
+            var s = script.replace('/', '_');
+            this.write('scripts', s, script);
+        }
+        set scripts(scripts) {
+            for(var i in scripts) {
+                var value = scripts[i];
+                var s = value.replace('/', '_');
+
+                this.write('scripts', s, value);
+            }
+        }
+        get scripts() {
+            return this.read('scripts');
+        }
+        scriptExists(script) {
+            var s = script.replace('/', '_');
+            if(this._registry['scripts'] === undefined) {
+                this._registry['scripts'] = [];
+            }
+            return this._registry['scripts'][s] === script;
+
         }
     }
 

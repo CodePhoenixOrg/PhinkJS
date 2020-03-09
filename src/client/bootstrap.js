@@ -6,16 +6,17 @@ var main = (mainNode.length > 0 && mainNode[0].dataset.init !== undefined) ? mai
 Phink.DOM.ready(function () {
 
     Phink.Backend.loadScriptsArray(depends, function () {
-        for (var i = 0; i < sources.length; i++) {
-            Phink.include(sources[i], function (e) {
-                if (typeof window[main] === 'function') {
-                    var initnow = 'phink_app_init_' + Date.now();
-                    window[initnow] = window[main];
-                    window[main] = null;
-                    window[initnow]();
-                }
-            });
-        }
+        // for (var i = 0; i < sources.length; i++) {
+        // Phink.include(sources[i], 
+        Phink.Backend.loadScriptsArray(sources, function (e) {
+            if (typeof window[main] === 'function') {
+                var initnow = 'phink_app_init_' + Date.now();
+                window[initnow] = window[main];
+                window[main] = null;
+                window[initnow]();
+            }
+        });
+        // }
     });
 
     Phink.Backend.bindEvents();
