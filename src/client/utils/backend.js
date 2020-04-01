@@ -1,6 +1,6 @@
 var Phink = Phink || {}
 
-Phink.Backend = class B {
+Phink.Backend = class _Backend {
     constructor() {
         this.isHacking = false;
         this.command = '';

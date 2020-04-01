@@ -2,7 +2,7 @@ var Phink = Phink || {}
 
 Phink.Registry = (function () {
     
-    class R {
+    class _Registry {
         constructor() {
             this._registry = [];
         }
@@ -92,5 +92,5 @@ Phink.Registry = (function () {
         }
     }
 
-    return new R();
+    return new _Registry();
 })();

@@ -1,12 +1,13 @@
 var Phink = Phink || {}
 
-Phink.Url = class U {
+Phink.Url = class _Url {
     constructor(url, domain, isSSL) {
         this._url = url;
         this._isParsed = false;
-        this._isSSL = isSSL;
+        this._isSSL = (isSSL !== undefined) ? isSSL : (window.location.protocol == 'https:');
+        
         this._tmpDomain = domain;
-        this._port = '80';
+        this._port = (this._isSSL) ? '443' : '80';
         this._page = window.location.pathname;
         this._domain = this._url;
         this._isRelative = false;
@@ -87,7 +88,8 @@ Phink.Url = class U {
         if (!this._isParsed) {
             this.parse();
         }
-        var fqPage = (this._queryString !== '') ? this._page + this._queryString : this._page;
-        return this._protocol + '//' + this._domain + '/' + fqPage;
+        var fqUrl = (this._queryString !== '') ? this._page + this._queryString : this._page;
+        fqUrl = this._protocol + '//' + (this._domain + '/' + fqUrl).replace(/\/\//g, '/');
+        return fqUrl;
     }
 }

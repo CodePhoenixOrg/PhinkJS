@@ -2,7 +2,7 @@ var Phink = Phink || {}
 
 Phink.Web = Phink.Web || {}
 
-Phink.Web.Object = class W extends Phink.Object {
+Phink.Web.Object = class _WebObject extends Phink.Object {
     constructor(parent) {
         super();
         if (parent !== undefined) {
@@ -10,7 +10,7 @@ Phink.Web.Object = class W extends Phink.Object {
             this._domain = parent.domain;
         } else {
             this._isSecured = (window.location.protocol === 'https:');
-            this._domain = window.location.hostname;
+            this._domain = window.location.hostname + Phink.DOM.rewriteBase;
         }
         this._origin = window.location.origin;
         this._url = {};

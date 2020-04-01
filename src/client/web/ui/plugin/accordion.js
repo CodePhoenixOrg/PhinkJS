@@ -2,7 +2,7 @@ var Phink = Phink || {}
 Phink.Web = Phink.Web || {}
 Phink.Web.UI = Phink.Web.UI || {}
 
-Phink.Web.UI.Accordion = class M extends Phink.Web.UI.Plugin {
+Phink.Web.UI.Accordion = class _Accordion extends Phink.Web.UI.Plugin {
     constructor() {
         super();
     }

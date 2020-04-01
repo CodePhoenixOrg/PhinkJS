@@ -2,7 +2,7 @@ var Phink = Phink || {}
 
 Phink.MVC = Phink.MVC || {}
 
-Phink.MVC.View = class V extends Phink.Web.Object {
+Phink.MVC.View = class _View extends Phink.Web.Object {
     constructor(application, name) {
         super(application);
         this._id = 'view' + Date.now();

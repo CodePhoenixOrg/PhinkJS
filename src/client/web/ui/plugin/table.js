@@ -2,7 +2,7 @@ var Phink = Phink || {}
 Phink.Web = Phink.Web || {}
 Phink.Web.UI = Phink.Web.UI || {}
 
-Phink.Web.UI.Table = class Q extends Phink.Web.UI.Plugin {
+Phink.Web.UI.Table = class _Table extends Phink.Web.UI.Plugin {
     constructor() {
         super();
     }

@@ -2,7 +2,7 @@ var Phink = Phink || {}
 
 Phink.Web = Phink.Web || {}
 
-Phink.Web.Application = class Z extends Phink.Web.Object {
+Phink.Web.Application = class _WebApplication extends Phink.Web.Object {
     constructor(domain, name, isSecured) {
         super();
         this._id = 'app' + Date.now();

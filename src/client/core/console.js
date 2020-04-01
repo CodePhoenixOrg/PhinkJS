@@ -1,7 +1,7 @@
 var Phink = Phink || {};
 
 Phink.Console = (function () {
-  class C {
+  class _Console {
     constructor() {
       this._log = [];
     }
@@ -35,7 +35,7 @@ Phink.Console = (function () {
     }
   }
 
-  return new C();
+  return new _Console();
 })();
 
 window.onerror = function (msg, url, line) {

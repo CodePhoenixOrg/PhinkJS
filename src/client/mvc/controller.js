@@ -1,7 +1,7 @@
 var Phink = Phink || {}
 
 Phink.MVC = Phink.MVC || {}
-Phink.MVC.Controller = class C extends Phink.Web.Object {
+Phink.MVC.Controller = class _Controller extends Phink.Web.Object {
     constructor(view, name) {
         super();
         this._domain = (view !== null) ? view.domain : '';
