@@ -2,7 +2,7 @@ var Phink = Phink || {}
 
 Phink.Web = Phink.Web || {}
 
-Phink.Web.Application = class Z extends Phink.Web.Object {
+Phink.Web.Application = class _WebApplication extends Phink.Web.Object {
     constructor(domain, name, isSecured) {
         super();
         this._id = 'app' + Date.now();
@@ -20,15 +20,23 @@ Phink.Web.Application = class Z extends Phink.Web.Object {
         this.addView(newView);
         return newView;
     }
-    createView(name) {
+    createView(name, callback) {
         var newView = Phink.MVC.View.create(this, name);
         this.addView(newView);
+        
+        if(typeof callback === 'function') {
+            callback.call(this);
+        }
         return newView;
     }
-    createController(viewName, name) {
+    createController(viewName, name, callback) {
         var view = this.getViewByName(viewName);
         var newCtrl = Phink.MVC.Controller.create(view, name);
         this.addController(newCtrl);
+
+        if(typeof callback === 'function') {
+            callback.call(this);
+        }
         return newCtrl;
     }
     getViewByName(viewName) {

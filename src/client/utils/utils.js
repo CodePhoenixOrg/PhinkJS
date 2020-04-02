@@ -1,6 +1,6 @@
 var Phink = Phink || {}
 
-Phink.Utils = class T {
+Phink.Utils = class _Utils {
     constructor() {
     }
     static find(haystack, index, needle) {
@@ -47,7 +47,7 @@ Phink.Utils = class T {
         ui.style.height = ui.contentWindow.document.body.scrollHeight + 'px';
     }
     static html64(container, html) {
-        document.querySelector(container).innerHTML = T.base64Decode(html);
+        document.querySelector(container).innerHTML = _Utils.base64Decode(html);
     }
     static secondsToString(seconds) {
         var minutes = Math.floor(seconds / 60);
@@ -81,7 +81,7 @@ Phink.Utils = class T {
             }
         } while (i < data.length);
         dec = tmp_arr.join('');
-        dec = T.utf8Decode(dec);
+        dec = _Utils.utf8Decode(dec);
         return dec;
     }
     static base64Encode(data) {
@@ -90,7 +90,7 @@ Phink.Utils = class T {
         }
         var b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
         var o1, o2, o3, h1, h2, h3, h4, bits, i = 0, ac = 0, enc = "", tmp_arr = [];
-        data = T.utf8Encode(data + '');
+        data = _Utils.utf8Encode(data + '');
         do {
             o1 = data.charCodeAt(i++);
             o2 = data.charCodeAt(i++);

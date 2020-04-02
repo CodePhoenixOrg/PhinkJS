@@ -2,7 +2,7 @@ var Phink = Phink || {}
 
 Phink.MVC = Phink.MVC || {}
 
-Phink.MVC.View = class V extends Phink.Web.Object {
+Phink.MVC.View = class _View extends Phink.Web.Object {
     constructor(application, name) {
         super(application);
         this._id = 'view' + Date.now();
@@ -44,12 +44,13 @@ Phink.MVC.View = class V extends Phink.Web.Object {
                     //            Phink.Registry.item(the.name).origin = xhr.getResponseHeader('origin');
                     Phink.Registry.origin = xhr.getResponseHeader('origin');
                     Phink.Registry.token = data.token;
-                    if (data.scripts !== undefined) {
-                        var l = data.scripts.length;
-                        for (var i = 0; i < l; i++) {
-                            the.getScript(data.scripts[i]);
-                        }
+                    if (data.jso !== undefined) {
+                        Phink.Backend.loadScriptsArray(data.jso);
                     }
+                    if (data.scripts !== undefined) {
+                        Phink.Backend.loadScriptsArray(data.scripts);
+                    }
+
                     data.view = Phink.Utils.base64Decode(data.view);
                     if (typeof callback === 'function') {
                         callback.call(this, data);
@@ -93,11 +94,11 @@ Phink.MVC.View = class V extends Phink.Web.Object {
                         var data = (xhr.responseText !== '') ? JSON.parse(xhr.responseText) : {};
                         Phink.Registry.token = data.token;
                         Phink.Registry.origin = xhr.getResponseHeader('origin');
+                        if (data.jso !== undefined) {
+                            Phink.Backend.loadScriptsArray(data.jso);
+                        }
                         if (data.scripts !== undefined) {
-                            var l = data.scripts.length;
-                            for (var i = 0; i < l; i++) {
-                                the.getScript(data.scripts[i]);
-                            }
+                            Phink.Backend.loadScriptsArray(data.scripts);
                         }
                         var html = Phink.Utils.base64Decode(data.view);
                         document.querySelector(attach).innerHTML = html;
@@ -126,11 +127,11 @@ Phink.MVC.View = class V extends Phink.Web.Object {
         if (data['view'] === undefined) {
             throw new Error('Not a view !');
         }
+        if (data.jso !== undefined) {
+            Phink.Backend.loadScriptsArray(data.jso);
+        }
         if (data.scripts !== undefined) {
-            var l = data.scripts.length;
-            for (var i = 0; i < l; i++) {
-                the.getScript(data.scripts[i]);
-            }
+            Phink.Backend.loadScriptsArray(data.scripts);
         }
         if (typeof callback === 'function') {
             callback.call(this, data);
@@ -152,11 +153,11 @@ Phink.MVC.View = class V extends Phink.Web.Object {
         this.getJSON(pageName, { "action": 'getViewHtml', "token": myToken }, function (data) {
             try {
                 Phink.Registry.token = data.token;
+                if (data.jso !== undefined) {
+                    Phink.Backend.loadScriptsArray(data.jso);
+                }
                 if (data.scripts !== undefined) {
-                    var l = data.scripts.length;
-                    for (var i = 0; i < l; i++) {
-                        the.getScript(data.scripts[i]);
-                    }
+                    Phink.Backend.loadScriptsArray(data.scripts);
                 }
                 var html = Phink.Utils.base64Decode(data.view);
                 document.querySelector(anchor).innerHTML = html;

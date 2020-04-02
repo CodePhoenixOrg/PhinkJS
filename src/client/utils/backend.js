@@ -1,6 +1,6 @@
 var Phink = Phink || {}
 
-Phink.Backend = class B {
+Phink.Backend = class _Backend {
     constructor() {
         this.isHacking = false;
         this.command = '';
@@ -8,6 +8,9 @@ Phink.Backend = class B {
     static loadScriptsArray (scripts, callback) {
 
         var F = function (src) {
+            if(Phink.Registry.scriptExists(src)) {
+                return false;
+            }
             var next;
             var tag = document.createElement("script");
             tag.src = src;
@@ -17,16 +20,17 @@ Phink.Backend = class B {
                 next = scripts.shift();
                 if (next) {
                     F(next);
-                } else if (typeof callback == 'function') {
-                    callback();
-                }
+                } 
             })
-            document.body.appendChild(tag);
+            Phink.Registry.script = src;
 
+            document.body.appendChild(tag);
         };
         if (scripts.length > 0) {
             F(scripts.shift());
-        } else if (typeof callback == 'function') {
+        }
+
+        if (typeof callback == 'function') {
             callback();
         }
     }
