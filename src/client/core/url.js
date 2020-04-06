@@ -7,7 +7,7 @@ Phink.Url = class _Url {
         this._isSSL = (isSSL !== undefined) ? isSSL : (window.location.protocol == 'https:');
         
         this._tmpDomain = domain;
-        this._port = (this._isSSL) ? '443' : '80';
+        this._port = window.location.port;
         this._page = window.location.pathname;
         this._domain = this._url;
         this._isRelative = false;
@@ -89,7 +89,7 @@ Phink.Url = class _Url {
             this.parse();
         }
         var fqUrl = (this._queryString !== '') ? this._page + this._queryString : this._page;
-        fqUrl = this._protocol + '//' + (this._domain + '/' + fqUrl).replace(/\/\//g, '/');
+        fqUrl = this._protocol + '//' + (this._domain + (this._port !== 80 && this._port !== 443 ? ':' + this._port : '') + Phink.DOM.rewriteBase + fqUrl).replace(/\/\//g, '/');
         return fqUrl;
     }
 }

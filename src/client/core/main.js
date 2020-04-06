@@ -8,10 +8,10 @@ Phink.DOM = (function () {
             var phinkNode = document.querySelectorAll("script[src*='" + FILE_NAME + "']");
             this._depends = (phinkNode.length > 0 && phinkNode[0].dataset.depends !== undefined) ? phinkNode[0].dataset.depends.split(";") : [];
             this._sources = (phinkNode.length > 0 && phinkNode[0].dataset.sources !== undefined) ? phinkNode[0].dataset.sources.split(";") : [];
+            this._rewriteBase = (phinkNode.length > 0 && phinkNode[0].dataset.rewritebase !== undefined) ? phinkNode[0].dataset.rewritebase : null;
             this._main = (phinkNode.length > 0 && phinkNode[0].dataset.init !== undefined) ? phinkNode[0].dataset.init : 'phink_main';
             
-            this._rewriteBase = phinkNode[0].src.substring(window.location.protocol.length + 2 + window.location.hostname.length);
-            this._rewriteBase = this._rewriteBase.substring(0, this._rewriteBase.length - FILE_NAME.length);
+            this._rewriteBase = (this._rewriteBase === null) ? (new URL(phinkNode[0].src)).pathname.replace(FILE_NAME, '') : this._rewriteBase;
         
             this._rewriteBase = this._rewriteBase != '' ? this._rewriteBase : '/';
             
@@ -51,7 +51,7 @@ Phink.include = function (file, callback) {
 Phink.ajax = function (url, data, callback) {
     var params = [];
 
-    var urls = new Phink.Url(url, window.location.host + Phink.DOM.rewriteBase);
+    var urls = new Phink.Url(url, window.location.hostname);
     url = urls.toString();
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
