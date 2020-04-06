@@ -66,7 +66,7 @@ Phink.Url = class _Url {
             if (this._page.substring(0, 1) === '/') {
                 this._page = this._page.substring(1);
             }
-            this._port = (this._port === '') ? '80' : this._port;
+            this._port = (this._port === '') ? (this._isSSL) ? '443' : '80' : this._port;
             this._protocol = ((this._domain !== '' && this._protocol === '') ? ((this._isSSL) ? 'https:' : 'http:') : this._protocol);
         }
         var queryString = '';
@@ -89,7 +89,7 @@ Phink.Url = class _Url {
             this.parse();
         }
         var fqUrl = (this._queryString !== '') ? this._page + this._queryString : this._page;
-        fqUrl = this._protocol + '//' + (this._domain + (this._port !== 80 && this._port !== 443 ? ':' + this._port : '') + Phink.DOM.rewriteBase + fqUrl).replace(/\/\//g, '/');
+        fqUrl = this._protocol + '//' + (this._domain + (this._port !== '80' && this._port !== '443' ? ':' + this._port : '') + Phink.DOM.rewriteBase + fqUrl).replace(/\/\//g, '/');
         return fqUrl;
     }
 }
