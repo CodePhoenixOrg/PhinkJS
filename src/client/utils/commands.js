@@ -5,7 +5,7 @@ Phink.Commands = (function () {
     class _Commands {
         constructor() {}
         clearRuntime(callback) {
-            Phink.ajax('console', {
+            Phink.ajax('console/', {
                 "action": 'clearRuntime'
             }, function (data, status, xhr) {
                 if (typeof callback == 'function') {
