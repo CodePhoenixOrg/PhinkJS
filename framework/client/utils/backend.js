@@ -5,48 +5,59 @@ Phink.Backend = class _Backend {
         this.isHacking = false;
         this.command = '';
     }
-    static loadScriptsArray (scripts, callback) {
+    static loadScriptsArray(scripts, callback) {
 
         var F = function (src) {
-            if(Phink.Registry.scriptExists(src)) {
+            if (Phink.Registry.scriptExists(src)) {
                 return false;
             }
-            var next;
+
             var tag = document.createElement("script");
             tag.src = src;
             tag.type = "text/javascript";
 
             tag.addEventListener('load', function (e) {
-                next = scripts.shift();
-                if (next) {
-                    F(next);
-                } 
+                // while (!e.returnValue) {
+
+                // }
+
+                if (scripts.length === 0 && typeof callback === 'function') {
+                    callback.call(null);
+                }
             })
+            document.body.appendChild(tag);
+
             Phink.Registry.script = src;
 
-            document.body.appendChild(tag);
+            if (scripts.length > 0) {
+                let next = scripts.shift();
+
+                if (next) {
+                    F(next);
+                }
+
+            }
+
         };
         if (scripts.length > 0) {
             F(scripts.shift());
         }
 
-        if (typeof callback == 'function') {
-            callback();
-        }
+
     }
 
-    static bindEvents () {
+    static bindEvents() {
 
-        window.onkeydown = function(e) {    
+        window.onkeydown = function (e) {
             var code = e.keyCode ? e.keyCode : e.which;
 
-            if(code === 27) { // ESC is typed
+            if (code === 27) { // ESC is typed
                 this.command = '';
                 console.log("command = '" + this.command + "'");
             }
         };
 
-        window.onkeypress = function(e) {    
+        window.onkeypress = function (e) {
             var code = e.keyCode ? e.keyCode : e.which;
 
             if (code === 35 && this.command === '') { // # is typed
