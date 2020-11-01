@@ -2,8 +2,11 @@
   "name": "phinkjs",
   "version": "0.2.11",
   "description": "A client and server side JavaScript framework to be used standalone or in Phink PHP projects",
-  "main": "HelloWorld/web/index.js",
+  "main": "src/web/index.js",
   "repository": "https://github.com/dpjb71/PhinkJS.git",
   "author": "David Blanchard <dblanchard1@bbox.fr>",
-  "license": "GPL-3.0"
+  "license": "GPL-3.0",
+  "dependencies": {
+    "pm2": "^4.4.0"
+  }
 }
