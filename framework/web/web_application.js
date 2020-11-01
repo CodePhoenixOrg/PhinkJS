@@ -13,20 +13,30 @@ PhinkJS.Rest.Router = require('../rest/rest_router.js');
 require('../bootstrap');
 
 PhinkJS.Web.Application = class F extends PhinkJS.Web.Object {
+    
     constructor() {
-        super(this);
+        super(null);
 
         this._headers = null;
+
     }
 
+    // static get instance() {
+    //     if(this._instance === null || this._instance === undefined) {
+    //         this._instance = new F();
+    //     }
+    //     return this._instance;
+    // }
     get headers() {
         return this._headers;
     }
 
     static create(url, options, callback) {
 
+        let self = new F();
+
         const baseurl = require('url').parse(url);
-        let port = baseurl.port;
+        self.port = baseurl.port;
 
         //baseurl.protocol == 'https' && 
         if(options !== undefined && options.key !== undefined && options.cert !== undefined) {
@@ -39,19 +49,19 @@ PhinkJS.Web.Application = class F extends PhinkJS.Web.Object {
             }
             console.log('Is secure');
             require('https').createServer(options, function(req, res) {
-                F.engine(req, res, callback);
-            }).listen(port);
+                self.engine(req, res, callback);
+            }).listen(self.port);
 
         } else {
             require('http').createServer(function(req, res) {
-                F.engine(req, res, callback);
-            }).listen(port);
+                self.engine(req, res, callback);
+            }).listen(self.port);
 
         }
 
     }
 
-    static engine (req, res, callback) {
+    engine (req, res, callback) {
         
         let body = [];
         let self = this;
@@ -67,7 +77,7 @@ PhinkJS.Web.Application = class F extends PhinkJS.Web.Object {
                 console.error(err);
             })
 
-            let router = new PhinkJS.BaseRouter(this, req, res);
+            let router = new PhinkJS.BaseRouter(self, req, res);
             router.match();
 
             if (router.requestType === 'rest') {
@@ -84,6 +94,7 @@ PhinkJS.Web.Application = class F extends PhinkJS.Web.Object {
                 if (exists) {
                     router.dispatch(function (req, res, stream) {
                         self._headers = req.headers;
+
                         if (typeof callback === 'function') {
                             callback(req, res, stream);
                         }
@@ -95,14 +106,16 @@ PhinkJS.Web.Application = class F extends PhinkJS.Web.Object {
                     res.writeHead(404, {
                         'Content-Type': router.mimeType
                     });
-                    res.write("Error 404 - It looks like you are lost in middle of no ware ...");
+                    res.write("Error 404 - It looks like you are lost in middle of nowhere ...");
                     req.emit('finish');
                 }
             });
 
         }).on('finish', function () {
-            res.end();
-            req.emit('close');
+            if(res !== null) {
+                res.end();
+                req.emit('close');
+            }
         }).on('close', function () {
             req = null;
             res = null;

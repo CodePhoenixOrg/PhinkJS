@@ -51,7 +51,7 @@ Phink.MVC.View = class _View extends Phink.Web.Object {
                         Phink.Backend.loadScriptsArray(data.scripts);
                     }
 
-                    data.view = Phink.Utils.base64Decode(data.view);
+                    data.view = atob(data.view);
                     if (typeof callback === 'function') {
                         callback.call(this, data);
                     }
@@ -100,7 +100,7 @@ Phink.MVC.View = class _View extends Phink.Web.Object {
                         if (data.scripts !== undefined) {
                             Phink.Backend.loadScriptsArray(data.scripts);
                         }
-                        var html = Phink.Utils.base64Decode(data.view);
+                        var html = atob(data.view);
                         document.querySelector(attach).innerHTML = html;
                         if (typeof callback === 'function') {
                             callback.call(this, data);
@@ -122,7 +122,7 @@ Phink.MVC.View = class _View extends Phink.Web.Object {
             throw new Error('Response is empty !');
         }
         var the = this;
-        response = Phink.Utils.base64Decode(response);
+        response = atob(response);
         var data = JSON.parse(response);
         if (data['view'] === undefined) {
             throw new Error('Not a view !');
@@ -159,7 +159,7 @@ Phink.MVC.View = class _View extends Phink.Web.Object {
                 if (data.scripts !== undefined) {
                     Phink.Backend.loadScriptsArray(data.scripts);
                 }
-                var html = Phink.Utils.base64Decode(data.view);
+                var html = atob(data.view);
                 document.querySelector(anchor).innerHTML = html;
             }
             catch (e) {
