@@ -8,7 +8,9 @@ PhinkJS.Web.Object = require('../web/web_object.js');
 PhinkJS.MVC.Controller = class F extends PhinkJS.Web.Object {
     constructor(parent, viewName) {
         super(parent);
-        
+
+        this.port = parent.port;
+
         this._viewName = viewName;
         this._view = new (require(global.PHINK_ROOT + 'mvc/view'))(parent, viewName);
     }

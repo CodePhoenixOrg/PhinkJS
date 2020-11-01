@@ -47,7 +47,7 @@ Phink.Utils = class _Utils {
         ui.style.height = ui.contentWindow.document.body.scrollHeight + 'px';
     }
     static html64(container, html) {
-        document.querySelector(container).innerHTML = _Utils.base64Decode(html);
+        document.querySelector(container).innerHTML = atob(html);
     }
     static secondsToString(seconds) {
         var minutes = Math.floor(seconds / 60);

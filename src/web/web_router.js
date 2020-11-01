@@ -1,6 +1,6 @@
 'use strict';
-let PhinkJS = global.PhinkJS || {};
-PhinkJS.Web = PhinkJS.Web || {};
+let PhinkJS = global.PhinkJS || {};
+PhinkJS.Web = PhinkJS.Web || {};
 
 PhinkJS.BaseRouter = require('../core/base_router.js');
 
@@ -35,8 +35,10 @@ PhinkJS.Web.Router = class F extends PhinkJS.BaseRouter {
             '.png': ['image/png', '']
         }[this._extension];
 
-        this._encoding = mime[1];
-        this._mimetype = mime[0];
+        if (mime) {
+            this._encoding = mime[1];
+            this._mimetype = mime[0];
+        }
 
         this._filePath = (this._extension === '.html') ? global.APP_VIEWS + url : (this._extension === '.js' && url.lastIndexOf('/phink.js') > -1) ? global.PHINK_ROOT + 'phink.js' : global.DOCUMENT_ROOT + url;
 
@@ -64,7 +66,7 @@ PhinkJS.Web.Router = class F extends PhinkJS.BaseRouter {
             });
             return true;
         }
- 
+
         require('./web_object').include(this._filePath, encoding, function (err, stream) {
             if (!err) {
 

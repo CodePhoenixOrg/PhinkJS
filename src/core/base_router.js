@@ -12,16 +12,14 @@ PhinkJS.BaseRouter = class F extends PhinkJS.Web.Object {
 
     constructor(parent, req, res) {
         if (parent instanceof PhinkJS.BaseRouter) {
-            super(parent.parent);
+            super(parent);
             this._request = parent.request;
             this._response = parent.response;
             this._translation = parent.translation;
             this._requestType = parent.requestType;
             this._parameters = parent.parameters;
             this._className = parent.className;
-            // console.log("PARAMETERS PARENT");
-            // console.log({'parent': [parent.request.method, parent.parameters, parent.translation, parent.requestType, parent.className]});
-            // console.log("END PARAMETERS PARENT");
+            this.port = parent.port;
 
         } else {
             super(parent);
@@ -31,6 +29,8 @@ PhinkJS.BaseRouter = class F extends PhinkJS.Web.Object {
             this._requestType = WEB;
             this._className = '';
             this._parameters = null;
+            this.port = parent.port;
+
         }
 
         this._mimetype = '';

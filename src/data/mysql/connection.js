@@ -32,9 +32,9 @@ class PhinkJSMySQLConnection {
             // let _conn = new mysql.createConnection({
             //     host: 'localhost',
             //     port: 3307,
-            //     user: 'djay',
+            //     user: 'lambda',
             //     password: 'demo',
-            //     database: 'soundlib'
+            //     database: 'demo'
             // });
             let _conn = null;
 
@@ -46,9 +46,9 @@ class PhinkJSMySQLConnection {
 
         // let _conn = mysql.createConnection({
         //     host: 'localhost',
-        //     user: 'djay',
+        //     user: 'lambda',
         //     password: 'demo',
-        //     database: 'soundlib'
+        //     database: 'demo'
         // });
 
 
